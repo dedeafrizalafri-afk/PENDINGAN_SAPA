@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pendingan SAPA Balaraja</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--text:#172033;--muted:#687386;--line:#e5e9f0;--accent:#2563eb;--soft:#eef4ff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:245px;background:#111827;color:#fff;padding:24px 16px}.brand{font-weight:800;font-size:18px;padding:0 10px 28px}.brand small{display:block;color:#9ca3af;font-size:11px;margin-top:5px}.nav{padding:11px 12px;border-radius:10px;background:#1f2937}.nav span{margin-right:8px}
+main{margin-left:245px;padding:25px;max-width:1800px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:25px}.top p{margin:6px 0 0;color:var(--muted);font-size:13px}
+button{border:0;border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer}.refresh{background:var(--accent);color:white}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:19px;box-shadow:0 5px 18px #17203308}.label{font-size:13px;color:var(--muted)}.num{font-size:30px;font-weight:800;margin-top:9px}.ico{float:right;background:var(--soft);padding:9px;border-radius:10px}
+.panel{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px}.filters{display:flex;gap:10px;flex-wrap:wrap}.filters input,.filters select{height:42px;border:1px solid #d9dee8;border-radius:9px;padding:0 12px;min-width:180px;flex:1}.tablewrap{overflow:auto;margin-top:15px;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;min-width:1550px;font-size:12px}th{background:#f8fafc;text-align:left;padding:12px;white-space:nowrap;position:sticky;top:0}td{padding:11px 12px;border-top:1px solid #eef0f4;white-space:nowrap}tr:hover{background:#f9fbff}.badge{display:inline-block;padding:5px 8px;border-radius:999px;background:#fff4d6;color:#8a6100;font-weight:700}.count{color:var(--muted);font-size:12px;margin-top:12px}
+@media(max-width:900px){.sidebar{position:static;width:auto;padding:14px}.nav{display:none}main{margin-left:0;padding:14px}.cards{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start;gap:10px}.top h1{font-size:20px}}
+</style></head>
+<body>
+<aside class="sidebar"><div class="brand">📦 SAPA BALARAJA<small>PENDING ORDER DASHBOARD</small></div><div class="nav">▣ Dashboard</div></aside>
+<main>
+<div class="top"><div><h1>Dashboard Pendingan</h1><p>Monitoring pending order SAPA Balaraja • Data terhubung ke Google Sheet</p></div><button class="refresh" onclick="loadData()">↻ Refresh Data</button></div>
+<div class="cards">
+<div class="card"><span class="ico">📋</span><div class="label">Total Pending</div><div class="num" id="total">0</div></div>
+<div class="card"><span class="ico">📦</span><div class="label">Total QTY</div><div class="num" id="qty">0</div></div>
+<div class="card"><span class="ico">🏪</span><div class="label">Jumlah Toko</div><div class="num" id="stores">0</div></div>
+<div class="card"><span class="ico">👤</span><div class="label">Jumlah PIC</div><div class="num" id="pics">0</div></div>
+</div>
+<section class="panel">
+<div class="filters"><input id="search" placeholder="🔎 Cari toko, no order, PLU, customer..."><select id="handling"><option value="">Semua Penanganan</option></select><select id="pic"><option value="">Semua PIC</option></select><button onclick="exportCSV()">⬇ Export</button></div>
+<div class="count" id="count"></div>
+<div class="tablewrap"><table><thead><tr><th>TGL ORDER</th><th>KODE TOKO</th><th>NAMA TOKO</th><th>NAMA AC</th><th>NAMA AM</th><th>DC</th><th>NO ORDE</th><th>PLU</th><th>KODE PLU</th><th>DESKRIPSI</th><th>QTY</th><th>OH</th><th>NAMA CUSTOMER</th><th>PENANGANAN</th><th>KETERANGAN</th><th>PIC</th><th>UPDATE</th></tr></thead><tbody id="body"></tbody></table></div>
+</section></main>
+<script>
+const URLCSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vS169Srv3rdFs6JAfzotcL9qklXPh0AKi6jt-2ROYDlYSKtdDJy2KQ0znqTfHF_IVCtLJjyXXdbnLbm/pub?gid=463015523&single=true&output=csv";
+let rows=[],shown=[];
+function csv(t){let a=[],r=[],c="",q=false;for(let i=0;i<t.length;i++){let x=t[i],n=t[i+1];if(x=='"'&&q&&n=='"'){c+='"';i++;continue}if(x=='"'){q=!q;continue}if(x==','&&!q){r.push(c.trim());c="";continue}if((x=='\n'||x=='\r')&&!q){if(x=='\r'&&n=='\n')i++;r.push(c.trim());if(r.some(Boolean))a.push(r);r=[];c="";continue}c+=x}if(c||r.length){r.push(c.trim());if(r.some(Boolean))a.push(r)}return a}
+async function loadData(){try{let t=await (await fetch(URLCSV,{cache:"no-store"})).text(),a=csv(t);rows=a.slice(1).map(r=>r.concat(Array(17-r.length).fill("")))}catch(e){rows=[]}filters();render()}
+function filters(){let hs=[...new Set(rows.map(r=>r[13]).filter(Boolean))].sort(),ps=[...new Set(rows.map(r=>r[15]).filter(Boolean))].sort();handling.innerHTML='<option value="">Semua Penanganan</option>'+hs.map(x=>`<option>${esc(x)}</option>`).join("");pic.innerHTML='<option value="">Semua PIC</option>'+ps.map(x=>`<option>${esc(x)}</option>`).join("")}
+function render(){let s=search.value.toLowerCase(),h=handling.value,p=pic.value;shown=rows.filter(r=>(!s||r.join(" ").toLowerCase().includes(s))&&(!h||r[13]==h)&&(!p||r[15]==p));total.textContent=shown.length.toLocaleString("id-ID");qty.textContent=shown.reduce((a,r)=>a+(Number(r[10])||0),0).toLocaleString("id-ID");stores.textContent=new Set(shown.map(r=>r[1]).filter(Boolean)).size;pics.textContent=new Set(shown.map(r=>r[15]).filter(Boolean)).size;count.textContent=`Menampilkan ${shown.length.toLocaleString("id-ID")} data`;body.innerHTML=shown.length?shown.map(r=>`<tr>${r.slice(0,17).map((x,i)=>`<td>${i===13?`<span class="badge">${esc(x)}</span>`:esc(x)}</td>`).join("")}</tr>`).join(""):`<tr><td colspan="17" style="text-align:center;padding:35px">Data tidak ditemukan</td></tr>`}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function exportCSV(){let h=["TGL ORDER","KODE TOKO","NAMA TOKO","NAMA AC","NAMA AM","DC","NO ORDE","PLU","KODE PLU","DESKRIPSI","QTY","OH","NAMA CUSTOMER","PENANGANAN","KETERANGAN","PIC","UPDATE"];let t=[h,...shown].map(r=>r.map(x=>`"${String(x??"").replaceAll('"','""')}"`).join(",")).join("\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+t],{type:"text/csv"}));a.download="pendingan-sapa-balaraja.csv";a.click()}
+search.oninput=render;handling.onchange=render;pic.onchange=render;loadData();
+</script></body></html>
