@@ -302,7 +302,7 @@
       <!-- GRAFIK TREN HARIAN, KATEGORI & SLA BREAKDOWN -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- SLA Breakdown Donut Chart (NEW) -->
+        <!-- SLA Breakdown Donut Chart -->
         <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
           <div class="mb-3">
             <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
@@ -378,7 +378,7 @@
         </div>
       </div>
 
-      <!-- Quick Preset Tanggal Buttons (NEW) -->
+      <!-- Quick Preset Tanggal Buttons -->
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         <span class="text-xs font-bold text-slate-400 shrink-0">Preset:</span>
         <button onclick="setFilterDatePreset('today')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Hari Ini</button>
@@ -401,7 +401,6 @@
           <input id="pd2" type="date" onchange="renderP(1)" title="Sampai Tanggal"
             class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
         </div>
-        <!-- SLA Filter Dropdown (NEW) -->
         <div>
           <select id="psla" onchange="renderP(1)" 
             class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
@@ -433,7 +432,6 @@
         <div class="overflow-x-auto min-h-[300px]">
           <table id="pt" class="w-full text-left text-xs border-collapse"></table>
         </div>
-        <!-- Pagination P -->
         <div id="pPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
@@ -455,7 +453,6 @@
         <div class="overflow-x-auto min-h-[300px]">
           <table id="at" class="w-full text-left text-xs border-collapse"></table>
         </div>
-        <!-- Pagination A -->
         <div id="aPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
@@ -472,7 +469,6 @@
         </button>
       </div>
 
-      <!-- Filter Serah Terima -->
       <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
         <div class="lg:col-span-2">
           <input id="sq" placeholder="🔎 Cari Toko / Kode / Picker / Order ID..." oninput="renderS(1)" 
@@ -493,7 +489,6 @@
         <div class="overflow-x-auto min-h-[300px]">
           <table id="st" class="w-full text-left text-xs border-collapse"></table>
         </div>
-        <!-- Pagination S -->
         <div id="sPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
@@ -510,7 +505,6 @@
         </button>
       </div>
 
-      <!-- Filter Rekap -->
       <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         <div>
           <input id="rq" placeholder="🔎 Cari Data Rekap Pengerjaan..." oninput="renderR(1)" 
@@ -525,14 +519,13 @@
         <div class="overflow-x-auto min-h-[300px]">
           <table id="rt" class="w-full text-left text-xs border-collapse"></table>
         </div>
-        <!-- Pagination Rekap -->
         <div id="rPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
 
   </main>
 
-  <!-- MODAL DETAIL ROW / UPDATE FORM (NEW) -->
+  <!-- MODAL DETAIL ROW / UPDATE FORM -->
   <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-xl w-full p-6 border border-slate-200 dark:border-slate-700 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -548,7 +541,6 @@
         <!-- Content Dynamic -->
       </div>
 
-      <!-- Optional Update Action Form (Google Webhook) -->
       <div class="border-t border-slate-100 dark:border-slate-700 pt-3 space-y-2">
         <h4 class="font-bold text-slate-700 dark:text-slate-200">Update Status Penanganan (Internal)</h4>
         <div class="grid grid-cols-2 gap-2">
@@ -600,7 +592,6 @@
       a: 'https://docs.google.com/spreadsheets/d/14V-_mluDi0m3MzCuODu1qWuAiMVdBj33RmOLNtd8xd4/gviz/tq?tqx=out:csv&gid=0',
       s: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3ernNEwvWFbHmFCxYTe-1PIU2zrmiSXpUfKygTyTifU0utlr78ynlXjFWP7xcVuxSWMpgUlWMg_ey/pub?gid=277045831&single=true&output=csv',
       r: 'https://docs.google.com/spreadsheets/d/1liETKEZLstyowBTgYe5PNM0CalPSVjOR0b4-CXvDFd4/gviz/tq?tqx=out:csv&gid=694772450',
-      // Webhook Apps Script Opsional jika ingin update data langsung ke Spreadsheet
       updateWebhook: '' 
     };
 
@@ -615,7 +606,6 @@
     let countdownTimer = null;
     let secondsLeft = 180;
 
-    // --- LOCALSTORAGE & INITIAL PREFERENCES ---
     function initPreferences() {
       const isDark = localStorage.getItem('sapa_dark_mode') === 'true';
       if (isDark) {
@@ -628,7 +618,6 @@
         document.getElementById('refreshInterval').value = savedTimer;
       }
 
-      // Restore active tab parameter from URL
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get('tab');
       if (tabParam && ['dash', 'pending', 'absensi', 'serah', 'rekap'].includes(tabParam)) {
@@ -653,7 +642,6 @@
       window.history.pushState({}, '', url);
     }
 
-    // --- AUTO REFRESH DYNAMIC TIMER ---
     function changeAutoRefresh() {
       const sec = parseInt(document.getElementById('refreshInterval').value, 10);
       localStorage.setItem('sapa_refresh_timer', sec);
@@ -688,7 +676,6 @@
       document.getElementById('timerCountdown').textContent = `(${m}:${s < 10 ? '0' : ''}${s})`;
     }
 
-    // --- CSV PARSER ---
     function csv(text) {
       let rows = [], row = [], cell = '', q = false;
       for (let i = 0; i < text.length; i++) {
@@ -728,20 +715,49 @@
       return String(x ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]))
     }
 
+    // === FUNGSI NORMDATE & HEADER DIPERBAIKI SANGAT FLEKSIBEL ===
     function normDate(v) {
       v = String(v || '').trim();
       if (!v) return null;
-      let m = v.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
-      if (m) return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
-      let d = new Date(v); 
-      return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+
+      // 1. Ambil bagian tanggalnya saja jika ada jam/waktu (dipisah spasi)
+      let datePart = v.split(' ')[0].trim();
+
+      // 2. Format DD/MM/YYYY atau DD-MM-YYYY (Contoh: 01/08/2026 atau 1-8-2026)
+      let m1 = datePart.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+      if (m1) {
+        return `${m1[3]}-${m1[2].padStart(2, '0')}-${m1[1].padStart(2, '0')}`;
+      }
+
+      // 3. Format YYYY-MM-DD atau YYYY/MM/DD (Contoh: 2026-08-01)
+      let m2 = datePart.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+      if (m2) {
+        return `${m2[1]}-${m2[2].padStart(2, '0')}-${m2[3].padStart(2, '0')}`;
+      }
+
+      // 4. Fallback menggunakan Javascript Date Standard
+      let d = new Date(v);
+      if (!isNaN(d.getTime())) {
+        let year = d.getFullYear();
+        let month = String(d.getMonth() + 1).padStart(2, '0');
+        let day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+
+      return null;
     }
 
     function pendingHeader() {
       const h = (P[0] || []).map(x => String(x).trim().toUpperCase());
-      const find = (...names) => { for (const n of names) { const i = h.findIndex(x => x.includes(n)); if (i >= 0) return i } return -1 };
+      const find = (...names) => { 
+        for (const n of names) { 
+          const i = h.findIndex(x => x.includes(n)); 
+          if (i >= 0) return i 
+        } 
+        return -1 
+      };
       return {
-        date: find('TGL ORDER', 'TANGGAL'),
+        date: find('TGL ORDER', 'TANGGAL ORDER', 'TGL', 'TANGGAL', 'DATE'),
         handling: find('PENANGANAN', 'KETERANGAN', 'STATUS'),
         pic: find('PIC'),
         toko: find('TOKO', 'NAMA TOKO', 'KODE TOKO'),
@@ -756,7 +772,6 @@
       return { date: find('TANGGAL', 'TGL', 'DATE', 'WAKTU') };
     }
 
-    // --- SLA / AGEING CALCULATOR & BADGE ---
     function getSLAInfo(dateStr) {
       if (!dateStr) return { badge: '<span class="text-slate-400">—</span>', category: 'unknown', hours: 0 };
       const orderDate = new Date(dateStr);
@@ -787,7 +802,6 @@
       }
     }
 
-    // --- CRITICAL ALERT & AUDIO NOTIFICATION ---
     function playAlertSound() {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -842,7 +856,6 @@
       document.getElementById('pmsg').innerHTML = `<span class="text-red-600 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Menampilkan ${criticalData.length} Data Critical (>60 Jam) — HARUS DILAKUKAN REFUND & KONFIRMASI KE TOKO</span>`;
     }
 
-    // --- QUICK DATE PRESETS ---
     function setFilterDatePreset(preset) {
       const d1 = document.getElementById('pd1');
       const d2 = document.getElementById('pd2');
@@ -869,7 +882,6 @@
       renderP(1);
     }
 
-    // --- MODAL DETAIL ROW ---
     function openDetailModal(rowIndex) {
       const r = P[rowIndex];
       if(!r) return;
@@ -889,7 +901,6 @@
       });
       bodyHtml += '</div>';
 
-      // Tombol WhatsApp Toko
       const phoneNum = H.phone >= 0 ? String(r[H.phone] || '').replace(/\D/g, '') : '';
       if(phoneNum) {
         const storeName = H.toko >= 0 ? r[H.toko] : 'Toko';
@@ -936,7 +947,6 @@
       }
     }
 
-    // Helper Paginasi & Renderer Tabel Lengkap
     function renderPaginatedTable(elTable, elPageContainer, headers, dataRows, currentPage, onPageChange, isPendingTable = false) {
       if (!headers || !headers.length) { 
         elTable.innerHTML = ''; 
@@ -953,7 +963,6 @@
 
       const H = pendingHeader();
 
-      // Render Header
       let html = '<thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700"><tr>';
       if (isPendingTable) {
         html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap text-alfa-red dark:text-red-400">STATUS SLA / AGEING</th>`;
@@ -1014,7 +1023,6 @@
       html += '</tbody>';
       elTable.innerHTML = html;
 
-      // Render Pagination Bar
       if (elPageContainer) {
         elPageContainer.innerHTML = `
           <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
@@ -1192,7 +1200,6 @@
       renderS(1);
     }
 
-    // --- MULTI-SHEET EXCEL EXPORT ---
     function exportMultiSheetExcel() {
       if (typeof XLSX === 'undefined') {
         alert('Library Excel belum siap. Silakan coba beberapa detik lagi.');
@@ -1209,7 +1216,6 @@
       XLSX.writeFile(wb, `Executive_Report_SAPA_Balaraja_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
 
-    // --- PDF REPORT EXPORT ---
     function exportPDFReport() {
       if (typeof html2pdf === 'undefined') {
         alert('Library PDF belum siap.');
@@ -1331,7 +1337,6 @@
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#94A3B8' : '#64748B';
 
-      // SLA Donut Chart
       const ctxSLA = document.getElementById('slaChart').getContext('2d');
       if (slaChartInstance) slaChartInstance.destroy();
       slaChartInstance = new Chart(ctxSLA, {
@@ -1351,7 +1356,6 @@
         }
       });
 
-      // Bar Chart
       const ctxBar = document.getElementById('handlingChart').getContext('2d');
       if (barChartInstance) barChartInstance.destroy();
       barChartInstance = new Chart(ctxBar, {
@@ -1375,7 +1379,6 @@
         }
       });
 
-      // Line Chart
       const sortedDates = Object.keys(dateCounts).sort().slice(-7);
       const trendData = sortedDates.map(d => dateCounts[d]);
 
@@ -1460,7 +1463,6 @@
       updateTimestamp();
     }
 
-    // Initialize Preferences, Auto-Refresh & Load Data
     initPreferences();
     changeAutoRefresh();
     loadAll();
