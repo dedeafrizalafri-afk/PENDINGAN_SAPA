@@ -155,8 +155,8 @@
           <button id="n3" onclick="show('serah')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-clipboard-check"></i> Rekap Serah Terima
           </button>
-          <!-- TAB BARU: REKAP PENGERJAAN -->
-          <button id="n4" onclick="show('pengerjaan')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
+          <!-- NAV MENU REKAP PENGERJAAN -->
+          <button id="n4" onclick="show('rekap')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-list-check"></i> Rekap Pengerjaan
           </button>
         </nav>
@@ -472,73 +472,35 @@
       </div>
     </section>
 
-    <!-- ================= SECTION REKAP PENGERJAAN (BARU) ================= -->
-    <section id="pengerjaan" class="space-y-4 sm:space-y-6" hidden>
+    <!-- ================= SECTION REKAP PENGERJAAN ================= -->
+    <section id="rekap" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Pengerjaan Order</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Rekapitulasi beban pengerjaan & produktivitas per PIC / Admin</p>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Pengerjaan PIC</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Rekapitulasi pengerjaan langsung dari Google Sheet Rekap</p>
         </div>
-        <button onclick="resetPengerjaanFilters()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition self-start sm:self-auto">
+        <button onclick="resetRekapFilters()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition self-start sm:self-auto">
           <i class="fa-solid fa-xmark"></i> Reset Filter
         </button>
       </div>
 
-      <!-- Summary Stat Cards Rekap Pengerjaan -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Total PIC Active</p>
-            <h4 id="statTotalPIC" class="text-xl font-black text-slate-800 dark:text-white mt-0.5">0</h4>
-          </div>
-          <div class="w-9 h-9 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl flex items-center justify-center font-bold">
-            <i class="fa-solid fa-users"></i>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-extrabold text-alfa-red dark:text-red-400 uppercase tracking-wider">Total Handled Refund</p>
-            <h4 id="statTotalRefund" class="text-xl font-black text-alfa-red dark:text-red-400 mt-0.5">0</h4>
-          </div>
-          <div class="w-9 h-9 bg-red-50 dark:bg-red-950/50 text-alfa-red dark:text-red-400 rounded-xl flex items-center justify-center font-bold">
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-blue-100 dark:border-slate-700 shadow-sm flex items-center justify-between">
-          <div>
-            <p class="text-[10px] font-extrabold text-alfa-blue dark:text-blue-400 uppercase tracking-wider">Total Handled Kirim Ulang</p>
-            <h4 id="statTotalKirim" class="text-xl font-black text-alfa-blue dark:text-blue-400 mt-0.5">0</h4>
-          </div>
-          <div class="w-9 h-9 bg-blue-50 dark:bg-blue-950/50 text-alfa-blue dark:text-blue-400 rounded-xl flex items-center justify-center font-bold">
-            <i class="fa-solid fa-truck-fast"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filter Pengerjaan -->
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+      <!-- Filter Rekap -->
+      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         <div>
-          <input id="kq" placeholder="🔎 Cari Nama PIC / Admin..." oninput="renderK()" 
+          <input id="rq" placeholder="🔎 Cari Data Rekap Pengerjaan..." oninput="renderR(1)" 
             class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
         </div>
-        <div>
-          <input id="kd1" type="date" onchange="renderK()" title="Dari Tanggal"
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-        </div>
-        <div>
-          <input id="kd2" type="date" onchange="renderK()" title="Sampai Tanggal"
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-        </div>
       </div>
 
-      <!-- Tabel Summary Rekap Pengerjaan per PIC -->
       <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="kmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700">Memuat rekap...</div>
-        <div class="overflow-x-auto">
-          <table id="kt" class="w-full text-left text-xs border-collapse"></table>
+        <div id="rmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-alfa-red"></i> Memuat data rekap...
         </div>
+        <div class="overflow-x-auto min-h-[300px]">
+          <table id="rt" class="w-full text-left text-xs border-collapse"></table>
+        </div>
+        <!-- Pagination Rekap -->
+        <div id="rPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
 
@@ -569,299 +531,427 @@
     const URLS = {
       p: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS169Srv3rdFs6JAfzotcL9qklXPh0AKi6jt-2ROYDlYSKtdDJy2KQ0znqTfHF_IVCtLJjyXXdbnLbm/pub?gid=463015523&single=true&output=csv',
       a: 'https://docs.google.com/spreadsheets/d/14V-_mluDi0m3MzCuODu1qWuAiMVdBj33RmOLNtd8xd4/gviz/tq?tqx=out:csv&gid=0',
-      s: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPnbbzXYhczdMyg5f3SB8a1KXTelUx2RnyOObbPtbhjydJ0qs-O5BlG3Mkd-BeXF_nMWBeKft9OVEY/pub?gid=0&single=true&output=csv'
+      s: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3ernNEwvWFbHmFCxYTe-1PIU2zrmiSXpUfKygTyTifU0utlr78ynlXjFWP7xcVuxSWMpgUlWMg_ey/pub?gid=277045831&single=true&output=csv',
+      r: 'https://docs.google.com/spreadsheets/d/1liETKEZLstyowBTgYe5PNM0CalPSVjOR0b4-CXvDFd4/gviz/tq?tqx=out:csv&gid=694772450'
     };
 
-    let P = [], A = [], S = [];
-    let pPage = 1, aPage = 1, sPage = 1;
-    const PER_PAGE = 25;
-    let autoRefreshTimer = null;
-    let autoRefreshSec = 180;
-    let timerCountdownSec = 180;
-    let timerInterval = null;
+    let P = [], A = [], S = [], R = [];
+    let criticalData = [];
+    let barChartInstance = null, lineChartInstance = null;
+    let pageP = 1, pageA = 1, pageS = 1, pageR = 1;
+    const PAGE_SIZE = 10;
 
-    let handlingChartInstance = null;
-    let trendChartInstance = null;
+    let refreshTimer = null;
+    let countdownTimer = null;
+    let secondsLeft = 180;
 
-    // --- INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
-      initDarkMode();
-      loadAll();
-      setupAutoRefresh();
-    });
-
-    // --- DARK MODE LOGIC ---
-    function initDarkMode() {
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // --- LOCALSTORAGE & DARK MODE ---
+    function initPreferences() {
+      // Load Dark Mode
+      const isDark = localStorage.getItem('sapa_dark_mode') === 'true';
+      if (isDark) {
         document.documentElement.classList.add('dark');
         document.getElementById('darkModeIcon').className = 'fa-solid fa-sun text-amber-300';
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-moon';
+      }
+
+      // Load Timer Interval
+      const savedTimer = localStorage.getItem('sapa_refresh_timer');
+      if (savedTimer !== null) {
+        document.getElementById('refreshInterval').value = savedTimer;
       }
     }
 
     function toggleDarkMode() {
       const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.theme = isDark ? 'dark' : 'light';
-      document.getElementById('darkModeIcon').className = isDark ? 'fa-solid fa-sun text-amber-300' : 'fa-solid fa-moon';
-      if (handlingChartInstance) updateChartsAndKPIs();
+      localStorage.setItem('sapa_dark_mode', isDark);
+      
+      const icon = document.getElementById('darkModeIcon');
+      icon.className = isDark ? 'fa-solid fa-sun text-amber-300' : 'fa-solid fa-moon';
+      
+      if (P.length) updateChartsAndKPIs();
     }
 
-    // --- NAVIGATION LOGIC ---
-    function show(x) {
-      ['dash', 'pending', 'absensi', 'serah', 'pengerjaan'].forEach((id, i) => {
-        const section = document.getElementById(id);
-        const btnNav = document.getElementById('n' + i);
-        if (section) section.hidden = (id !== x);
-        if (btnNav) {
-          btnNav.className = (id === x) 
-            ? "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5" 
-            : "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5";
-        }
-      });
-      if (x === 'pengerjaan') renderK();
-    }
-
-    // --- AUTO REFRESH TIMER ---
-    function setupAutoRefresh() {
-      if (autoRefreshTimer) clearInterval(autoRefreshTimer);
-      if (timerInterval) clearInterval(timerInterval);
-
-      const sel = document.getElementById('refreshInterval');
-      autoRefreshSec = parseInt(sel.value, 10);
-
-      const spanCountdown = document.getElementById('timerCountdown');
-
-      if (autoRefreshSec > 0) {
-        timerCountdownSec = autoRefreshSec;
-        spanCountdown.classList.remove('hidden');
-
-        timerInterval = setInterval(() => {
-          timerCountdownSec--;
-          if (timerCountdownSec <= 0) {
-            timerCountdownSec = autoRefreshSec;
-          }
-          const m = Math.floor(timerCountdownSec / 60);
-          const s = timerCountdownSec % 60;
-          spanCountdown.textContent = `(${m}:${s < 10 ? '0' : ''}${s})`;
-        }, 1000);
-
-        autoRefreshTimer = setInterval(() => {
-          loadAll();
-        }, autoRefreshSec * 1000);
-      } else {
-        spanCountdown.classList.add('hidden');
-      }
-    }
-
+    // --- AUTO REFRESH DYNAMIC TIMER ---
     function changeAutoRefresh() {
-      setupAutoRefresh();
-    }
+      const sec = parseInt(document.getElementById('refreshInterval').value, 10);
+      localStorage.setItem('sapa_refresh_timer', sec);
 
-    // --- FETCH & PARSE CSV ---
-    async function get(url) {
-      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now());
-      if (!res.ok) throw new Error('HTTP Error: ' + res.status);
-      const txt = await res.text();
-      return parseCSV(txt);
-    }
+      clearInterval(refreshTimer);
+      clearInterval(countdownTimer);
+      
+      const timerDisplay = document.getElementById('timerCountdown');
 
-    function parseCSV(text) {
-      const lines = text.split(/\r\n|\n/);
-      const result = [];
-      for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-        if (!line) continue;
-        let row = [];
-        let inQuotes = false;
-        let str = '';
-        for (let j = 0; j < line.length; j++) {
-          let c = line[j];
-          if (c === '"') {
-            inQuotes = !inQuotes;
-          } else if (c === ',' && !inQuotes) {
-            row.push(str.trim());
-            str = '';
-          } else {
-            str += c;
-          }
+      if (sec <= 0) {
+        timerDisplay.classList.add('hidden');
+        return;
+      }
+
+      secondsLeft = sec;
+      timerDisplay.classList.remove('hidden');
+      updateTimerDisplay();
+
+      countdownTimer = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          secondsLeft = sec;
+          loadAll();
         }
-        row.push(str.trim());
-        result.push(row);
-      }
-      return result;
+        updateTimerDisplay();
+      }, 1000);
     }
 
-    // --- LOAD ALL DATA ---
-    async function loadAll() {
-      document.getElementById('lastUpdate').textContent = 'Update: Loading...';
-
-      // Load Pendingan
-      try {
-        P = await get(URLS.p);
-        const totalP = Math.max(0, P.length - 1);
-        document.getElementById('cp').textContent = totalP;
-        fillPendingSelects();
-        renderP(1);
-        renderK();
-        updateTopStores();
-        updateChartsAndKPIs();
-        checkCriticalAlerts();
-      } catch (e) {
-        document.getElementById('pmsg').innerHTML = `<span class="text-red-500 font-bold">Gagal memuat Pendingan: ${e.message}</span>`;
-      }
-
-      // Load Absensi
-      try {
-        A = await get(URLS.a);
-        document.getElementById('ca').textContent = Math.max(0, A.length - 1);
-        renderA(1);
-      } catch (e) {
-        document.getElementById('amsg').innerHTML = `<span class="text-red-500 font-bold">Gagal memuat Absensi: ${e.message}</span>`;
-      }
-
-      // Load Serah Terima
-      try {
-        S = await get(URLS.s);
-        document.getElementById('cs').textContent = Math.max(0, S.length - 1);
-        renderS(1);
-      } catch (e) {
-        document.getElementById('smsg').innerHTML = `<span class="text-red-500 font-bold">Gagal memuat Serah Terima: ${e.message}</span>`;
-      }
-
-      const now = new Date();
-      document.getElementById('lastUpdate').textContent = 'Update: ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
-      timerCountdownSec = autoRefreshSec;
+    function updateTimerDisplay() {
+      const m = Math.floor(secondsLeft / 60);
+      const s = secondsLeft % 60;
+      document.getElementById('timerCountdown').textContent = `(${m}:${s < 10 ? '0' : ''}${s})`;
     }
 
-    // --- HELPER PARSING HEADER DATA ---
+    // --- CSV PARSER ---
+    function csv(text) {
+      let rows = [], row = [], cell = '', q = false;
+      for (let i = 0; i < text.length; i++) {
+        let c = text[i], n = text[i + 1];
+        if (c == '"' && q && n == '"') { cell += '"'; i++; continue }
+        if (c == '"') { q = !q; continue }
+        if (c == ',' && !q) { row.push(cell.trim()); cell = ''; continue }
+        if ((c == '\n' || c == '\r') && !q) {
+          if (c == '\r' && n == '\n') i++;
+          row.push(cell.trim()); cell = '';
+          if (row.some(x => x !== '')) rows.push(row);
+          row = []; continue
+        }
+        cell += c;
+      }
+      if (cell || row.length) { row.push(cell.trim()); if (row.some(x => x !== '')) rows.push(row) }
+      return rows;
+    }
+
+    async function get(url) {
+      const targetUrl = url + (url.includes('?') ? '&' : '?') + '_=' + Date.now();
+      try {
+        const r = await fetch(targetUrl, { cache: 'no-store' });
+        if (!r.ok) throw Error('HTTP ' + r.status);
+        const t = await r.text();
+        if (t.trim().startsWith('<!DOCTYPE') || t.trim().startsWith('<html')) throw Error('Format CSV tidak didapatkan');
+        return csv(t);
+      } catch(e) {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(targetUrl);
+        const r2 = await fetch(proxyUrl);
+        const t2 = await r2.text();
+        return csv(t2);
+      }
+    }
+
+    function esc(x) {
+      return String(x ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]))
+    }
+
+    function normDate(v) {
+      v = String(v || '').trim();
+      if (!v) return null;
+      let m = v.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+      if (m) return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+      let d = new Date(v); 
+      return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+    }
+
     function pendingHeader() {
-      if (!P.length) return {};
-      const h = P[0].map(x => x.toLowerCase().trim());
+      const h = (P[0] || []).map(x => String(x).trim().toUpperCase());
+      const find = (...names) => { for (const n of names) { const i = h.findIndex(x => x.includes(n)); if (i >= 0) return i } return -1 };
       return {
-        date: h.findIndex(x => x.includes('tanggal') || x.includes('tgl') || x.includes('date')),
-        store: h.findIndex(x => x.includes('toko') || x.includes('store') || x.includes('nama toko')),
-        order: h.findIndex(x => x.includes('order') || x.includes('no order') || x.includes('id')),
-        plu: h.findIndex(x => x.includes('plu') || x.includes('item')),
-        handling: h.findIndex(x => x.includes('penanganan') || x.includes('status') || x.includes('handling')),
-        pic: h.findIndex(x => x.includes('pic') || x.includes('admin') || x.includes('petugas')),
-        age: h.findIndex(x => x.includes('jam') || x.includes('umur') || x.includes('aging') || x.includes('durasi'))
+        date: find('TGL ORDER', 'TANGGAL'),
+        handling: find('PENANGANAN', 'KETERANGAN', 'STATUS'),
+        pic: find('PIC'),
+        toko: find('TOKO', 'NAMA TOKO', 'KODE TOKO')
       };
     }
 
-    function normDate(s) {
-      if (!s) return '';
-      s = String(s).trim();
-      let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-      if (m) return `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
-      m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
-      if (m) return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
-      return s;
+    function serahHeader() {
+      const h = (S[0] || []).map(x => String(x).trim().toUpperCase());
+      const find = (...names) => { for (const n of names) { const i = h.findIndex(x => x.includes(n)); if (i >= 0) return i } return -1 };
+      return { date: find('TANGGAL', 'TGL', 'DATE', 'WAKTU') };
     }
 
-    function esc(s) {
-      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    // --- SLA / AGEING CALCULATOR ---
+    function getSLAStatusBadge(dateStr) {
+      if (!dateStr) return '<span class="text-slate-400">—</span>';
+      const orderDate = new Date(dateStr);
+      if (isNaN(orderDate.getTime())) return '<span class="text-slate-400">—</span>';
+
+      const diffHours = (new Date() - orderDate) / (1000 * 60 * 60);
+
+      if (diffHours < 24) {
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> &lt;24h (Aman)</span>`;
+      } else if (diffHours < 48) {
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 24-48h (Warning)</span>`;
+      } else if (diffHours < 60) {
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300 border border-orange-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-triangle-exclamation text-[8px] mr-1"></i> 48-60h (Kritis)</span>`;
+      } else {
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white dark:bg-red-700 animate-pulse" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-radiation text-[8px] mr-1"></i> &gt;60h (Over SLA)</span>`;
+      }
     }
 
-    // --- RENDER PENDINGAN ---
-    function fillPendingSelects() {
+    // --- CHECK CRITICAL PENDING (> 60 JAM) ---
+    function checkCriticalAlerts() {
       const H = pendingHeader();
-      const hSet = new Set();
-      const pSet = new Set();
+      const now = new Date();
+      criticalData = [];
 
       P.slice(1).forEach(r => {
-        if (H.handling >= 0 && r[H.handling]) hSet.add(r[H.handling].trim());
-        if (H.pic >= 0 && r[H.pic]) pSet.add(r[H.pic].trim());
+        const handlingVal = (H.handling >= 0 ? String(r[H.handling] || '') : '').toLowerCase();
+        const isHandled = handlingVal.includes('refund') || handlingVal.includes('kirim') || handlingVal.includes('selesai') || handlingVal.includes('done');
+        
+        if (!isHandled && H.date >= 0) {
+          const dateStr = normDate(r[H.date]);
+          if (dateStr) {
+            const orderDate = new Date(dateStr);
+            const diffHours = (now - orderDate) / (1000 * 60 * 60);
+            if (diffHours >= 60) {
+              criticalData.push(r);
+            }
+          }
+        }
       });
 
-      const selH = document.getElementById('ph');
-      const selP = document.getElementById('pp');
-
-      selH.innerHTML = '<option value="">Semua Penanganan</option>';
-      Array.from(hSet).sort().forEach(x => {
-        selH.innerHTML += `<option value="${esc(x)}">${esc(x)}</option>`;
-      });
-
-      selP.innerHTML = '<option value="">Semua PIC</option>';
-      Array.from(pSet).sort().forEach(x => {
-        selP.innerHTML += `<option value="${esc(x)}">${esc(x)}</option>`;
-      });
+      const banner = document.getElementById('criticalBanner');
+      if (criticalData.length > 0) {
+        document.getElementById('criticalCount').textContent = criticalData.length;
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
     }
 
-    function getFilteredPending() {
-      if (!P.length) return [];
-      const q = (document.getElementById('pq').value || '').toLowerCase();
-      const d1 = document.getElementById('pd1').value;
-      const d2 = document.getElementById('pd2').value;
-      const hVal = document.getElementById('ph').value;
-      const pVal = document.getElementById('pp').value;
+    function filterCritical() {
+      show('pending');
+      resetPendingFilters();
+      renderPaginatedTable(
+        document.getElementById('pt'), 
+        document.getElementById('pPage'), 
+        P[0] || [], 
+        criticalData, 
+        1, 
+        'renderP',
+        true
+      );
+      document.getElementById('pmsg').innerHTML = `<span class="text-red-600 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Menampilkan ${criticalData.length} Data Critical (>60 Jam) — HARUS DILAKUKAN REFUND & KONFIRMASI KE TOKO</span>`;
+    }
+
+    // Helper Paginasi & Renderer Tabel Lengkap
+    function renderPaginatedTable(elTable, elPageContainer, headers, dataRows, currentPage, onPageChange, isPendingTable = false) {
+      if (!headers || !headers.length) { 
+        elTable.innerHTML = ''; 
+        if(elPageContainer) elPageContainer.innerHTML = ''; 
+        return; 
+      }
+
+      const totalItems = dataRows.length;
+      const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
+      const page = Math.max(1, Math.min(currentPage, totalPages));
+      
+      const startIdx = (page - 1) * PAGE_SIZE;
+      const paginatedData = dataRows.slice(startIdx, startIdx + PAGE_SIZE);
+
       const H = pendingHeader();
 
-      return P.slice(1).filter(r => {
+      // Render Header
+      let html = '<thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700"><tr>';
+      if (isPendingTable) {
+        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap text-alfa-red dark:text-red-400">STATUS SLA / AGEING</th>`;
+      }
+      headers.slice(0, 18).forEach(x => {
+        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap">${esc(x)}</th>`;
+      });
+      html += '</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">';
+      
+      if (paginatedData.length === 0) {
+        const colSpanTotal = headers.length + (isPendingTable ? 1 : 0);
+        html += `<tr><td colspan="${colSpanTotal}" class="p-8 text-center text-slate-400 font-medium italic">Data tidak ditemukan / Kosong</td></tr>`;
+      } else {
+        paginatedData.forEach((r, idx) => {
+          const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
+          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">`;
+          
+          if (isPendingTable) {
+            const dateVal = H.date >= 0 ? normDate(r[H.date]) : null;
+            html += `<td class="p-3 whitespace-nowrap">${getSLAStatusBadge(dateVal)}</td>`;
+          }
+
+          r.slice(0, 18).forEach(x => {
+            let cellVal = esc(x);
+            const lower = cellVal.toLowerCase();
+            
+            if(lower.includes('refund')) {
+              cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 border border-red-200 dark:border-red-800">${cellVal}</span>`;
+            } else if(lower.includes('kirim ulang') || lower.includes('kirimulang')) {
+              cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-blue-100 dark:bg-blue-950 text-alfa-blue dark:text-blue-300 border border-blue-200 dark:border-blue-800">${cellVal}</span>`;
+            } else if(lower.includes('selesai') || lower.includes('done') || lower.includes('ok')) {
+              cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">${cellVal}</span>`;
+            } else if(lower.includes('proses') || lower.includes('pending') || lower.includes('wait')) {
+              cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">${cellVal}</span>`;
+            }
+
+            html += `<td class="p-3 whitespace-nowrap">${cellVal}</td>`;
+          });
+          html += '</tr>';
+        });
+      }
+      html += '</tbody>';
+      elTable.innerHTML = html;
+
+      // Render Pagination Bar
+      if (elPageContainer) {
+        elPageContainer.innerHTML = `
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+            Halaman <b class="text-slate-800 dark:text-white">${page}</b> dari <b class="text-slate-800 dark:text-white">${totalPages}</b> (${totalItems} data)
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button ${page <= 1 ? 'disabled' : ''} onclick="${onPageChange}(${page - 1})" 
+              class="px-2.5 py-1 rounded-lg text-xs font-bold border ${page <= 1 ? 'bg-slate-100 dark:bg-slate-800 text-slate-300 dark:text-slate-600 border-slate-200 dark:border-slate-700 cursor-not-allowed' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'} transition">
+              <i class="fa-solid fa-chevron-left"></i> Prev
+            </button>
+            <button ${page >= totalPages ? 'disabled' : ''} onclick="${onPageChange}(${page + 1})" 
+              class="px-2.5 py-1 rounded-lg text-xs font-bold border ${page >= totalPages ? 'bg-slate-100 dark:bg-slate-800 text-slate-300 dark:text-slate-600 border-slate-200 dark:border-slate-700 cursor-not-allowed' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'} transition">
+              Next <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function fillPendingSelects() {
+      const ph = document.getElementById('ph'), pp = document.getElementById('pp');
+      const H = pendingHeader(), hs = new Set(), ps = new Set();
+      P.slice(1).forEach(r => {
+        if (H.handling >= 0 && r[H.handling]) hs.add(r[H.handling]);
+        if (H.pic >= 0 && r[H.pic]) ps.add(r[H.pic]);
+      });
+      ph.innerHTML = '<option value="">Semua Penanganan</option>' + [...hs].sort().map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
+      pp.innerHTML = '<option value="">Semua PIC</option>' + [...ps].sort().map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
+    }
+
+    function renderP(page = 1) {
+      pageP = page;
+      const q = (document.getElementById('pq').value || '').toLowerCase();
+      const d1 = document.getElementById('pd1').value, d2 = document.getElementById('pd2').value;
+      const handling = document.getElementById('ph').value, pic = document.getElementById('pp').value;
+      const H = pendingHeader();
+      
+      let d = P.slice(1).filter(r => {
+        if (q && !r.join(' ').toLowerCase().includes(q)) return false;
+        if (handling && String(r[H.handling] || '') !== handling) return false;
+        if (pic && String(r[H.pic] || '') !== pic) return false;
         if (d1 || d2) {
           const dt = normDate(r[H.date]);
           if (!dt) return false;
           if (d1 && dt < d1) return false;
           if (d2 && dt > d2) return false;
         }
-        if (hVal && H.handling >= 0 && (r[H.handling] || '').trim() !== hVal) return false;
-        if (pVal && H.pic >= 0 && (r[H.pic] || '').trim() !== pVal) return false;
-        if (q) {
-          const rowText = r.join(' ').toLowerCase();
-          if (!rowText.includes(q)) return false;
+        return true;
+      });
+
+      renderPaginatedTable(
+        document.getElementById('pt'), 
+        document.getElementById('pPage'), 
+        P[0] || [], 
+        d, 
+        pageP, 
+        'renderP',
+        true
+      );
+      document.getElementById('pmsg').innerHTML = `<i class="fa-solid fa-list-check text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${d.length}</b> data pendingan`;
+    }
+
+    function renderA(page = 1) {
+      pageA = page;
+      let q = (document.getElementById('aq').value || '').toLowerCase();
+      let d = A.slice(1).filter(r => r.join(' ').toLowerCase().includes(q));
+      
+      renderPaginatedTable(
+        document.getElementById('at'), 
+        document.getElementById('aPage'), 
+        A[0] || [], 
+        d, 
+        pageA, 
+        'renderA',
+        false
+      );
+      document.getElementById('amsg').innerHTML = d.length ? `Menampilkan <b>${d.length}</b> data karyawan` : 'Tidak ada data';
+    }
+
+    function renderS(page = 1) {
+      pageS = page;
+      const q = (document.getElementById('sq').value || '').toLowerCase();
+      const d1 = document.getElementById('sd1').value, d2 = document.getElementById('sd2').value;
+      const H = serahHeader();
+
+      let d = S.slice(1).filter(r => {
+        if (q && !r.join(' ').toLowerCase().includes(q)) return false;
+        if (d1 || d2) {
+          const dt = normDate(r[H.date >= 0 ? H.date : 0]);
+          if (!dt) return false;
+          if (d1 && dt < d1) return false;
+          if (d2 && dt > d2) return false;
         }
         return true;
       });
+
+      renderPaginatedTable(
+        document.getElementById('st'), 
+        document.getElementById('sPage'), 
+        S[0] || [], 
+        d, 
+        pageS, 
+        'renderS',
+        false
+      );
+      document.getElementById('smsg').innerHTML = `<i class="fa-solid fa-receipt text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${d.length}</b> data serah terima`;
     }
 
-    function renderP(page = 1) {
-      pPage = page;
-      const filtered = getFilteredPending();
-      const elTable = document.getElementById('pt');
-      const elMsg = document.getElementById('pmsg');
-      const elPage = document.getElementById('pPage');
+    // --- RENDER DATA REKAP (DARI URL SHEET BARU) ---
+    function renderR(page = 1) {
+      pageR = page;
+      const q = (document.getElementById('rq').value || '').toLowerCase();
+      let d = R.slice(1).filter(r => !q || r.join(' ').toLowerCase().includes(q));
 
-      if (!P.length) {
-        elMsg.innerHTML = 'Data tidak tersedia.';
-        return;
+      renderPaginatedTable(
+        document.getElementById('rt'),
+        document.getElementById('rPage'),
+        R[0] || [],
+        d,
+        pageR,
+        'renderR',
+        false
+      );
+
+      document.getElementById('rmsg').innerHTML = `<i class="fa-solid fa-list-check text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${d.length}</b> data rekap`;
+    }
+
+    function resetRekapFilters() {
+      document.getElementById('rq').value = '';
+      renderR(1);
+    }
+
+    function handleGlobalSearch() {
+      const q = document.getElementById('globalSearch').value.trim();
+      if(!q) return;
+
+      const currentTab = ['dash', 'pending', 'absensi', 'serah', 'rekap'].find(id => !document.getElementById(id).hidden);
+      if (currentTab === 'dash') show('pending');
+
+      if (!document.getElementById('pending').hidden) {
+        document.getElementById('pq').value = q;
+        renderP(1);
+      } else if (!document.getElementById('absensi').hidden) {
+        document.getElementById('aq').value = q;
+        renderA(1);
+      } else if (!document.getElementById('serah').hidden) {
+        document.getElementById('sq').value = q;
+        renderS(1);
+      } else if (!document.getElementById('rekap').hidden) {
+        document.getElementById('rq').value = q;
+        renderR(1);
       }
-
-      elMsg.innerHTML = `<i class="fa-solid fa-list-check text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${filtered.length}</b> dari <b class="text-slate-800 dark:text-white mx-1">${P.length - 1}</b> data pendingan`;
-
-      let html = '<thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700"><tr>';
-      P[0].forEach(h => {
-        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider">${esc(h)}</th>`;
-      });
-      html += '</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">';
-
-      const start = (pPage - 1) * PER_PAGE;
-      const paged = filtered.slice(start, start + PER_PAGE);
-
-      if (paged.length === 0) {
-        html += `<tr><td colspan="${P[0].length}" class="p-8 text-center text-slate-400 font-medium italic">Data pendingan tidak ditemukan</td></tr>`;
-      } else {
-        paged.forEach((r, idx) => {
-          const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
-          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">`;
-          r.forEach(c => {
-            html += `<td class="p-3 whitespace-nowrap">${esc(c)}</td>`;
-          });
-          html += '</tr>';
-        });
-      }
-      html += 'tbody>';
-      elTable.innerHTML = html;
-
-      // Pagination
-      const totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
-      elPage.innerHTML = `
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Halaman <b>${pPage}</b> dari <b>${totalPages}</b></span>
-        <div class="flex gap-1.5">
-          <button onclick="renderP(${pPage - 1})" ${pPage <= 1 ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Prev</button>
-          <button onclick="renderP(${pPage + 1})" ${pPage >= totalPages ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Next</button>
-        </div>
-      `;
     }
 
     function resetPendingFilters() {
@@ -873,218 +963,6 @@
       renderP(1);
     }
 
-    // --- RENDER REKAP PENGERJAAN PER PIC (BARU) ---
-    function renderK() {
-      const q = (document.getElementById('kq').value || '').toLowerCase();
-      const d1 = document.getElementById('kd1').value;
-      const d2 = document.getElementById('kd2').value;
-      const H = pendingHeader();
-
-      if (H.pic < 0) return;
-
-      const picMap = {};
-      let gRefund = 0, gKirim = 0, gLainnya = 0;
-
-      P.slice(1).forEach(r => {
-        // Filter Tanggal
-        if (d1 || d2) {
-          const dt = normDate(r[H.date]);
-          if (!dt) return;
-          if (d1 && dt < d1) return;
-          if (d2 && dt > d2) return;
-        }
-
-        const picName = (r[H.pic] || 'TANPA PIC').trim().toUpperCase();
-        if (q && !picName.toLowerCase().includes(q)) return;
-
-        if (!picMap[picName]) {
-          picMap[picName] = { pic: picName, total: 0, refund: 0, kirim: 0, lainnya: 0 };
-        }
-
-        const handlingVal = (H.handling >= 0 ? String(r[H.handling] || '') : '').toLowerCase();
-        
-        picMap[picName].total++;
-        if (handlingVal.includes('refund')) {
-          picMap[picName].refund++;
-          gRefund++;
-        } else if (handlingVal.includes('kirim') || handlingVal.includes('kirimulang')) {
-          picMap[picName].kirim++;
-          gKirim++;
-        } else {
-          picMap[picName].lainnya++;
-          gLainnya++;
-        }
-      });
-
-      const list = Object.values(picMap).sort((a, b) => b.total - a.total);
-
-      // Update KPI Pengerjaan
-      document.getElementById('statTotalPIC').textContent = list.length;
-      document.getElementById('statTotalRefund').textContent = gRefund;
-      document.getElementById('statTotalKirim').textContent = gKirim;
-
-      // Render Table
-      const elTable = document.getElementById('kt');
-      let html = `
-        <thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700">
-          <tr>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider">No</th>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider">Nama PIC / Admin</th>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider text-center">Refund</th>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider text-center">Kirim Ulang</th>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider text-center">Lainnya</th>
-            <th class="p-3 font-extrabold uppercase text-[10px] tracking-wider text-center">Total Ditangani</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">
-      `;
-
-      if (list.length === 0) {
-        html += `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-medium italic">Data pengerjaan tidak ditemukan</td></tr>`;
-      } else {
-        list.forEach((item, idx) => {
-          const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
-          html += `
-            <tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">
-              <td class="p-3 font-bold text-slate-400">${idx + 1}</td>
-              <td class="p-3 font-bold text-slate-800 dark:text-white">${esc(item.pic)}</td>
-              <td class="p-3 text-center"><span class="px-2 py-0.5 rounded font-extrabold bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300">${item.refund}</span></td>
-              <td class="p-3 text-center"><span class="px-2 py-0.5 rounded font-extrabold bg-blue-100 dark:bg-blue-950 text-alfa-blue dark:text-blue-300">${item.kirim}</span></td>
-              <td class="p-3 text-center"><span class="px-2 py-0.5 rounded font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">${item.lainnya}</span></td>
-              <td class="p-3 text-center font-black text-slate-900 dark:text-white text-sm">${item.total}</td>
-            </tr>
-          `;
-        });
-      }
-
-      html += '</tbody>';
-      elTable.innerHTML = html;
-      document.getElementById('kmsg').innerHTML = `<i class="fa-solid fa-users-gear text-alfa-red"></i> Menampilkan rekap produktivitas untuk <b class="text-slate-800 dark:text-white mx-1">${list.length}</b> PIC`;
-    }
-
-    function resetPengerjaanFilters() {
-      document.getElementById('kq').value = '';
-      document.getElementById('kd1').value = '';
-      document.getElementById('kd2').value = '';
-      renderK();
-    }
-
-    // --- RENDER ABSENSI ---
-    function renderA(page = 1) {
-      aPage = page;
-      const elTable = document.getElementById('at');
-      const elMsg = document.getElementById('amsg');
-      const elPage = document.getElementById('aPage');
-
-      if (!A.length) {
-        elMsg.innerHTML = 'Data absensi tidak tersedia.';
-        return;
-      }
-
-      const q = (document.getElementById('aq').value || '').toLowerCase();
-      const filtered = A.slice(1).filter(r => !q || r.join(' ').toLowerCase().includes(q));
-
-      elMsg.innerHTML = `<i class="fa-solid fa-user-clock text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${filtered.length}</b> dari <b class="text-slate-800 dark:text-white mx-1">${A.length - 1}</b> karyawan`;
-
-      let html = '<thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700"><tr>';
-      A[0].forEach(h => {
-        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider">${esc(h)}</th>`;
-      });
-      html += '</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">';
-
-      const start = (aPage - 1) * PER_PAGE;
-      const paged = filtered.slice(start, start + PER_PAGE);
-
-      if (paged.length === 0) {
-        html += `<tr><td colspan="${A[0].length}" class="p-8 text-center text-slate-400 font-medium italic">Data absensi tidak ditemukan</td></tr>`;
-      } else {
-        paged.forEach((r, idx) => {
-          const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
-          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">`;
-          r.forEach(c => {
-            html += `<td class="p-3 whitespace-nowrap">${esc(c)}</td>`;
-          });
-          html += '</tr>';
-        });
-      }
-      html += '</tbody>';
-      elTable.innerHTML = html;
-
-      // Pagination
-      const totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
-      elPage.innerHTML = `
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Halaman <b>${aPage}</b> dari <b>${totalPages}</b></span>
-        <div class="flex gap-1.5">
-          <button onclick="renderA(${aPage - 1})" ${aPage <= 1 ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Prev</button>
-          <button onclick="renderA(${aPage + 1})" ${aPage >= totalPages ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Next</button>
-        </div>
-      `;
-    }
-
-    // --- RENDER SERAH TERIMA ---
-    function renderS(page = 1) {
-      sPage = page;
-      const elTable = document.getElementById('st');
-      const elMsg = document.getElementById('smsg');
-      const elPage = document.getElementById('sPage');
-
-      if (!S.length) {
-        elMsg.innerHTML = 'Data serah terima tidak tersedia.';
-        return;
-      }
-
-      const q = (document.getElementById('sq').value || '').toLowerCase();
-      const d1 = document.getElementById('sd1').value;
-      const d2 = document.getElementById('sd2').value;
-
-      const filtered = S.slice(1).filter(r => {
-        if (d1 || d2) {
-          const dt = normDate(r[0]); // Asumsi kolom 0 adalah tanggal
-          if (!dt) return false;
-          if (d1 && dt < d1) return false;
-          if (d2 && dt > d2) return false;
-        }
-        if (q && !r.join(' ').toLowerCase().includes(q)) return false;
-        return true;
-      });
-
-      elMsg.innerHTML = `<i class="fa-solid fa-clipboard-check text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${filtered.length}</b> dari <b class="text-slate-800 dark:text-white mx-1">${S.length - 1}</b> data serah terima`;
-
-      let html = '<thead class="bg-red-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 border-b border-red-100 dark:border-slate-700"><tr>';
-      S[0].forEach(h => {
-        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider">${esc(h)}</th>`;
-      });
-      html += '</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">';
-
-      const start = (sPage - 1) * PER_PAGE;
-      const paged = filtered.slice(start, start + PER_PAGE);
-
-      if (paged.length === 0) {
-        html += `<tr><td colspan="${S[0].length}" class="p-8 text-center text-slate-400 font-medium italic">Data serah terima tidak ditemukan</td></tr>`;
-      } else {
-        paged.forEach((r, idx) => {
-          const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
-          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">`;
-          r.forEach(c => {
-            html += `<td class="p-3 whitespace-nowrap">${esc(c)}</td>`;
-          });
-          html += '</tr>';
-        });
-      }
-      html += '</tbody>';
-      elTable.innerHTML = html;
-
-      // Pagination
-      const totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
-      elPage.innerHTML = `
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Halaman <b>${sPage}</b> dari <b>${totalPages}</b></span>
-        <div class="flex gap-1.5">
-          <button onclick="renderS(${sPage - 1})" ${sPage <= 1 ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Prev</button>
-          <button onclick="renderS(${sPage + 1})" ${sPage >= totalPages ? 'disabled class="opacity-40 cursor-not-allowed"' : ''} class="px-2.5 py-1 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100">Next</button>
-        </div>
-      `;
-    }
-
     function resetSerahFilters() {
       document.getElementById('sq').value = '';
       document.getElementById('sd1').value = '';
@@ -1092,305 +970,275 @@
       renderS(1);
     }
 
-    // --- DASHBOARD CHARTS & KPIS ---
-    function updateChartsAndKPIs() {
-      if (!P.length) return;
-
-      const H = pendingHeader();
-      let refundCount = 0;
-      let kirimCount = 0;
-      const storeSet = new Set();
-      const handlingCategories = {};
-      const dateTrendMap = {};
-
-      P.slice(1).forEach(r => {
-        // Count handling
-        if (H.handling >= 0) {
-          const val = (r[H.handling] || 'Lainnya').trim();
-          const lVal = val.toLowerCase();
-          handlingCategories[val] = (handlingCategories[val] || 0) + 1;
-
-          if (lVal.includes('refund')) refundCount++;
-          if (lVal.includes('kirim') || lVal.includes('kirimulang')) kirimCount++;
-        }
-
-        // Count stores
-        if (H.store >= 0 && r[H.store]) {
-          storeSet.add(r[H.store].trim());
-        }
-
-        // Count trend date
-        if (H.date >= 0 && r[H.date]) {
-          const dt = normDate(r[H.date]);
-          if (dt) {
-            dateTrendMap[dt] = (dateTrendMap[dt] || 0) + 1;
-          }
-        }
-      });
-
-      const totalPending = Math.max(1, P.length - 1);
-      document.getElementById('cr').textContent = refundCount;
-      document.getElementById('ck').textContent = kirimCount;
-      document.getElementById('ct').textContent = storeSet.size;
-
-      document.getElementById('crRatio').textContent = Math.round((refundCount / totalPending) * 100) + '%';
-      document.getElementById('ckRatio').textContent = Math.round((kirimCount / totalPending) * 100) + '%';
-
-      // 1. Handling Bar Chart
-      const isDark = document.documentElement.classList.contains('dark');
-      const textColor = isDark ? '#CBD5E1' : '#334155';
-      const gridColor = isDark ? '#334155' : '#E2E8F0';
-
-      const labelsH = Object.keys(handlingCategories);
-      const dataH = Object.values(handlingCategories);
-
-      if (handlingChartInstance) handlingChartInstance.destroy();
-      const ctxH = document.getElementById('handlingChart').getContext('2d');
-      handlingChartInstance = new Chart(ctxH, {
-        type: 'bar',
-        data: {
-          labels: labelsH,
-          datasets: [{
-            label: 'Jumlah Order',
-            data: dataH,
-            backgroundColor: '#E11D2A',
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
-            y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
-          }
-        }
-      });
-
-      // Render chart summary box
-      document.getElementById('chartSummary').innerHTML = `
-        <div class="bg-red-50 dark:bg-slate-900 p-2.5 rounded-xl border border-red-100 dark:border-slate-800">
-          <p class="text-[10px] font-extrabold text-slate-400 uppercase">Prop. Refund</p>
-          <p class="text-lg font-black text-alfa-red mt-0.5">${Math.round((refundCount/totalPending)*100)}%</p>
-        </div>
-        <div class="bg-blue-50 dark:bg-slate-900 p-2.5 rounded-xl border border-blue-100 dark:border-slate-800">
-          <p class="text-[10px] font-extrabold text-slate-400 uppercase">Prop. Kirim Ulang</p>
-          <p class="text-lg font-black text-alfa-blue dark:text-blue-400 mt-0.5">${Math.round((kirimCount/totalPending)*100)}%</p>
-        </div>
-      `;
-
-      // 2. Trend Line Chart
-      const sortedDates = Object.keys(dateTrendMap).sort().slice(-7);
-      const dataTrend = sortedDates.map(d => dateTrendMap[d]);
-
-      if (trendChartInstance) trendChartInstance.destroy();
-      const ctxT = document.getElementById('trendChart').getContext('2d');
-      trendChartInstance = new Chart(ctxT, {
-        type: 'line',
-        data: {
-          labels: sortedDates,
-          datasets: [{
-            label: 'Order Pending',
-            data: dataTrend,
-            borderColor: '#0055A5',
-            backgroundColor: 'rgba(0, 85, 165, 0.1)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 4,
-            pointBackgroundColor: '#0055A5'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
-            y: { ticks: { color: textColor, font: { size: 10 } }, grid: { color: gridColor } }
-          }
-        }
-      });
-    }
-
-    // --- TOP STORES ---
-    function updateTopStores() {
-      if (!P.length) return;
-      const H = pendingHeader();
-      if (H.store < 0) return;
-
-      const storeCounts = {};
-      P.slice(1).forEach(r => {
-        const s = (r[H.store] || 'Lainnya').trim();
-        storeCounts[s] = (storeCounts[s] || 0) + 1;
-      });
-
-      const sortedStores = Object.entries(storeCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      const container = document.getElementById('topStoresList');
-
-      if (!sortedStores.length) {
-        container.innerHTML = '<p class="text-xs text-slate-400 italic">Tidak ada data toko.</p>';
-        return;
-      }
-
-      container.innerHTML = sortedStores.map(([storeName, count], idx) => `
-        <div class="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700/80 flex items-center justify-between">
-          <div class="min-w-0 pr-2">
-            <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300">#${idx + 1}</span>
-            <p class="text-xs font-bold text-slate-800 dark:text-white truncate mt-1" title="${esc(storeName)}">${esc(storeName)}</p>
-          </div>
-          <div class="text-right shrink-0">
-            <span class="text-sm font-black text-alfa-red dark:text-red-400">${count}</span>
-            <p class="text-[9px] text-slate-400 font-semibold">Order</p>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // --- CRITICAL ALERTS BANNER ---
-    function checkCriticalAlerts() {
-      if (!P.length) return;
-      const H = pendingHeader();
-      if (H.age < 0) return;
-
-      let criticals = 0;
-      P.slice(1).forEach(r => {
-        const ageVal = parseFloat(r[H.age]);
-        if (!isNaN(ageVal) && ageVal >= 60) {
-          criticals++;
-        }
-      });
-
-      const banner = document.getElementById('criticalBanner');
-      if (criticals > 0) {
-        document.getElementById('criticalCount').textContent = criticals;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
-    }
-
-    function filterCritical() {
-      show('pending');
-      const H = pendingHeader();
-      if (H.age >= 0) {
-        document.getElementById('pq').value = '60';
-        renderP(1);
-      }
-    }
-
-    // --- GLOBAL SEARCH ---
-    function handleGlobalSearch() {
-      const q = (document.getElementById('globalSearch').value || '').trim();
-      if (!q) return;
-
-      document.getElementById('pq').value = q;
-      document.getElementById('aq').value = q;
-      document.getElementById('sq').value = q;
-      document.getElementById('kq').value = q;
-
-      renderP(1);
-      renderA(1);
-      renderS(1);
-      renderK();
-    }
-
-    // --- EXPORT FUNCTIONS ---
-    function exportPending() {
-      const filtered = getFilteredPending();
-      if (!filtered.length) return alert('Tidak ada data untuk di-export!');
-
-      let csvContent = 'data:text/csv;charset=utf-8,';
-      csvContent += P[0].join(',') + '\n';
-      filtered.forEach(r => {
-        csvContent += r.map(c => `"${c}"`).join(',') + '\n';
-      });
-
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `Pendingan_SAPA_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    // MULTI-SHEET EXCEL EXPORT (Termasuk Rekap Pengerjaan)
+    // --- MULTI-SHEET EXCEL EXPORT ---
     function exportMultiSheetExcel() {
       if (typeof XLSX === 'undefined') {
-        alert('Library SheetJS/XLSX belum siap. Mohon refresh halaman.');
+        alert('Library Excel belum siap. Silakan coba beberapa detik lagi.');
         return;
       }
 
       const wb = XLSX.utils.book_new();
 
-      // Sheet 1: Pendingan
       if (P.length) {
         const wsP = XLSX.utils.aoa_to_sheet(P);
         XLSX.utils.book_append_sheet(wb, wsP, "Data Pendingan");
       }
-
-      // Sheet 2: Absensi
+      if (R.length) {
+        const wsR = XLSX.utils.aoa_to_sheet(R);
+        XLSX.utils.book_append_sheet(wb, wsR, "Rekap Pengerjaan");
+      }
       if (A.length) {
         const wsA = XLSX.utils.aoa_to_sheet(A);
-        XLSX.utils.book_append_sheet(wb, wsA, "Absensi SAPA");
+        XLSX.utils.book_append_sheet(wb, wsA, "Absensi Karyawan");
       }
-
-      // Sheet 3: Serah Terima
       if (S.length) {
         const wsS = XLSX.utils.aoa_to_sheet(S);
-        XLSX.utils.book_append_sheet(wb, wsS, "Serah Terima");
+        XLSX.utils.book_append_sheet(wb, wsS, "Rekap Serah Terima");
       }
 
-      // Sheet 4: Rekap Pengerjaan (Summary per PIC)
-      if (P.length) {
-        const H = pendingHeader();
-        if (H.pic >= 0) {
-          const picMap = {};
-          P.slice(1).forEach(r => {
-            const picName = (r[H.pic] || 'TANPA PIC').trim().toUpperCase();
-            if (!picMap[picName]) {
-              picMap[picName] = { pic: picName, total: 0, refund: 0, kirim: 0, lainnya: 0 };
-            }
-            const handlingVal = (H.handling >= 0 ? String(r[H.handling] || '') : '').toLowerCase();
-            picMap[picName].total++;
-            if (handlingVal.includes('refund')) picMap[picName].refund++;
-            else if (handlingVal.includes('kirim') || handlingVal.includes('kirimulang')) picMap[picName].kirim++;
-            else picMap[picName].lainnya++;
-          });
-
-          const summaryData = [
-            ["No", "Nama PIC / Admin", "Jumlah Refund", "Jumlah Kirim Ulang", "Lainnya", "Total Order Ditangani"]
-          ];
-
-          Object.values(picMap).sort((a,b) => b.total - a.total).forEach((item, idx) => {
-            summaryData.push([idx + 1, item.pic, item.refund, item.kirim, item.lainnya, item.total]);
-          });
-
-          const wsK = XLSX.utils.aoa_to_sheet(summaryData);
-          XLSX.utils.book_append_sheet(wb, wsK, "Rekap Pengerjaan PIC");
-        }
-      }
-
-      XLSX.writeFile(wb, `SAPA_Balaraja_Executive_Report_${new Date().toISOString().slice(0, 10)}.xlsx`);
+      XLSX.writeFile(wb, `Executive_Report_SAPA_Balaraja_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
 
-    // EXPORT PDF REPORT
+    // --- PDF REPORT EXPORT ---
     function exportPDFReport() {
       if (typeof html2pdf === 'undefined') {
-        alert('Library html2pdf belum siap. Mohon refresh halaman.');
+        alert('Library PDF belum siap.');
         return;
       }
+      show('dash');
       const element = document.getElementById('pdfPrintArea');
       const opt = {
         margin:       [0.3, 0.3, 0.3, 0.3],
-        filename:     `SAPA_Balaraja_Executive_Dashboard_${new Date().toISOString().slice(0,10)}.pdf`,
+        filename:     `SAPA_Balaraja_Executive_Report_${new Date().toISOString().slice(0,10)}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
+        html2canvas:  { scale: 2 },
         jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
       };
       html2pdf().set(opt).from(element).save();
     }
+
+    function exportPending() {
+      const rows = [P[0] || []].concat(P.slice(1));
+      const csvContent = rows.map(r => r.map(x => '"' + String(x ?? '').replace(/"/g, '""') + '"').join(',')).join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csvContent], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'pendingan_sapa_balaraja.csv';
+      a.click();
+    }
+
+    function show(x) {
+      ['dash', 'pending', 'absensi', 'serah', 'rekap'].forEach((id, i) => {
+        const section = document.getElementById(id);
+        const btnNav = document.getElementById('n' + i);
+        if (section) section.hidden = (id !== x);
+        if (btnNav) {
+          btnNav.className = (id === x) 
+            ? "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5" 
+            : "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5";
+        }
+      });
+    }
+
+    function updateTopStores() {
+      const H = pendingHeader();
+      if (H.toko < 0) return;
+
+      const storeCounts = {};
+      P.slice(1).forEach(r => {
+        const storeName = (r[H.toko] || '').trim();
+        if (storeName) {
+          storeCounts[storeName] = (storeCounts[storeName] || 0) + 1;
+        }
+      });
+
+      document.getElementById('ct').textContent = Object.keys(storeCounts).length;
+
+      const sortedStores = Object.entries(storeCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      const container = document.getElementById('topStoresList');
+      if (!sortedStores.length) {
+        container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-5">Tidak ada data toko</p>';
+        return;
+      }
+
+      const badgeColors = [
+        'bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 border-red-200 dark:border-red-800',
+        'bg-red-50 dark:bg-red-900/40 text-red-700 dark:text-red-300 border-red-100 dark:border-red-800',
+        'bg-red-50 dark:bg-red-900/40 text-red-700 dark:text-red-300 border-red-100 dark:border-red-800',
+        'bg-blue-50 dark:bg-blue-950 text-alfa-blue dark:text-blue-300 border-blue-100 dark:border-blue-800',
+        'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-600'
+      ];
+
+      container.innerHTML = sortedStores.map(([store, count], index) => `
+        <div class="flex flex-col justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 hover:bg-red-50/30 transition">
+          <span class="text-xs font-bold text-slate-700 dark:text-slate-200 truncate mb-2" title="${esc(store)}">${index + 1}. ${esc(store)}</span>
+          <span class="text-[11px] font-extrabold px-2 py-1 rounded-md border text-center ${badgeColors[index] || badgeColors[4]}">
+            ${count} Order
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function updateChartsAndKPIs() {
+      const H = pendingHeader();
+      let countRefund = 0, countKirimUlang = 0, countLainnya = 0;
+      const dateCounts = {};
+
+      P.slice(1).forEach(r => {
+        const val = (H.handling >= 0 ? String(r[H.handling] || '') : r.join(' ')).toLowerCase();
+        if (val.includes('refund')) {
+          countRefund++;
+        } else if (val.includes('kirim ulang') || val.includes('kirimulang')) {
+          countKirimUlang++;
+        } else {
+          countLainnya++;
+        }
+
+        if (H.date >= 0) {
+          const dt = normDate(r[H.date]);
+          if (dt) dateCounts[dt] = (dateCounts[dt] || 0) + 1;
+        }
+      });
+
+      const totalPending = Math.max(1, P.length - 1);
+      const refundRatio = ((countRefund / totalPending) * 100).toFixed(1);
+      const kirimRatio = ((countKirimUlang / totalPending) * 100).toFixed(1);
+
+      document.getElementById('cr').textContent = countRefund;
+      document.getElementById('crRatio').textContent = refundRatio + '%';
+      
+      document.getElementById('ck').textContent = countKirimUlang;
+      document.getElementById('ckRatio').textContent = kirimRatio + '%';
+
+      document.getElementById('chartSummary').innerHTML = `
+        <div class="bg-red-50 dark:bg-red-950/50 p-2 sm:p-2.5 rounded-xl border border-red-100 dark:border-red-900">
+          <p class="text-[10px] text-alfa-red dark:text-red-400 font-bold uppercase">Total Refund</p>
+          <p class="text-base sm:text-lg font-black text-alfa-redDark dark:text-red-300">${countRefund}</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-950/50 p-2 sm:p-2.5 rounded-xl border border-blue-100 dark:border-blue-900">
+          <p class="text-[10px] text-alfa-blue dark:text-blue-400 font-bold uppercase">Kirim Ulang</p>
+          <p class="text-base sm:text-lg font-black text-blue-900 dark:text-blue-300">${countKirimUlang}</p>
+        </div>
+      `;
+
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94A3B8' : '#64748B';
+
+      // Bar Chart
+      const ctxBar = document.getElementById('handlingChart').getContext('2d');
+      if (barChartInstance) barChartInstance.destroy();
+      barChartInstance = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+          labels: ['Refund', 'Kirim Ulang', 'Lainnya'],
+          datasets: [{
+            data: [countRefund, countKirimUlang, countLainnya],
+            backgroundColor: ['#E11D2A', '#0055A5', '#64748B'],
+            borderRadius: 8, barThickness: 32
+          }]
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: textColor } },
+            y: { ticks: { color: textColor } }
+          }
+        }
+      });
+
+      // Line Chart
+      const sortedDates = Object.keys(dateCounts).sort().slice(-7);
+      const trendData = sortedDates.map(d => dateCounts[d]);
+
+      const ctxLine = document.getElementById('trendChart').getContext('2d');
+      if (lineChartInstance) lineChartInstance.destroy();
+      lineChartInstance = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+          labels: sortedDates.length ? sortedDates : ['No Data'],
+          datasets: [{
+            label: 'Total Pending',
+            data: trendData.length ? trendData : [0],
+            borderColor: '#0055A5',
+            backgroundColor: isDark ? 'rgba(0, 85, 165, 0.3)' : 'rgba(0, 85, 165, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 3,
+            pointRadius: 4,
+            pointBackgroundColor: '#E11D2A'
+          }]
+        },
+        options: { 
+          responsive: true, 
+          maintainAspectRatio: false, 
+          plugins: { legend: { display: false } },
+          scales: { 
+            x: { ticks: { color: textColor } },
+            y: { beginAtZero: true, ticks: { color: textColor } } 
+          }
+        }
+      });
+    }
+
+    function updateTimestamp() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      const el = document.getElementById('lastUpdate');
+      if (el) el.textContent = 'Update: ' + timeStr + ' WIB';
+    }
+
+    async function loadAll() {
+      ['pmsg', 'amsg', 'smsg', 'rmsg'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Mengambil data...';
+      });
+
+      try {
+        P = await get(URLS.p);
+        const totalP = Math.max(0, P.length - 1);
+        document.getElementById('cp').textContent = totalP;
+        fillPendingSelects();
+        renderP(1);
+        updateTopStores();
+        updateChartsAndKPIs();
+        checkCriticalAlerts();
+      } catch (e) {
+        document.getElementById('pmsg').innerHTML = `<span class="text-red-600">❌ Gagal: ${esc(e.message)}</span>`;
+        document.getElementById('cp').textContent = '0';
+        document.getElementById('cr').textContent = '0';
+        document.getElementById('ck').textContent = '0';
+      }
+
+      try {
+        A = await get(URLS.a);
+        document.getElementById('ca').textContent = Math.max(0, A.length - 1);
+        renderA(1);
+      } catch (e) { document.getElementById('ca').textContent = '0'; }
+
+      try {
+        S = await get(URLS.s);
+        document.getElementById('cs').textContent = Math.max(0, S.length - 1);
+        renderS(1);
+      } catch (e) { document.getElementById('cs').textContent = '0'; }
+
+      try {
+        R = await get(URLS.r);
+        renderR(1);
+      } catch (e) {
+        document.getElementById('rmsg').innerHTML = `<span class="text-red-600">❌ Gagal memuat data rekap: ${esc(e.message)}</span>`;
+      }
+
+      updateTimestamp();
+    }
+
+    // Initialize Preferences, Auto-Refresh & Load Data
+    initPreferences();
+    changeAutoRefresh();
+    loadAll();
   </script>
 </body>
 </html>
