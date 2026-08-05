@@ -164,8 +164,8 @@
     </div>
   </header>
 
-  <!-- CRITICAL ALERT BANNER (> 60 JAM) -->
-  <div id="criticalBanner" class="hidden bg-red-600 text-white px-4 py-3 shadow-lg border-b-2 border-red-800 animate-pulse">
+  <!-- CRITICAL ALERT BANNER (> 60 JAM) DENGAN FITUR CLOSE -->
+  <div id="criticalBanner" class="hidden bg-red-600 text-white px-4 py-3 shadow-lg border-b-2 border-red-800 animate-pulse transition-all duration-300">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 bg-white text-red-600 rounded-full flex items-center justify-center font-black text-lg shrink-0">
@@ -179,9 +179,15 @@
           </p>
         </div>
       </div>
-      <button onclick="filterCritical()" class="bg-white text-red-700 hover:bg-red-100 px-3.5 py-1.5 rounded-xl text-xs font-black shadow transition whitespace-nowrap self-end sm:self-auto">
-        Lihat Detail Data <i class="fa-solid fa-arrow-right ml-1"></i>
-      </button>
+      <div class="flex items-center gap-2 self-end sm:self-auto">
+        <button onclick="filterCritical()" class="bg-white text-red-700 hover:bg-red-100 px-3.5 py-1.5 rounded-xl text-xs font-black shadow transition whitespace-nowrap">
+          Lihat Detail Data <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+        <!-- Tombol Close Banner -->
+        <button onclick="closeCriticalBanner()" class="bg-red-800 hover:bg-red-900 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shadow transition" title="Tutup Notifikasi">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -597,6 +603,7 @@
 
     let P = [], A = [], S = [], R = [];
     let criticalData = [];
+    let isBannerClosedManually = false;
     let barChartInstance = null, lineChartInstance = null, slaChartInstance = null;
     let pageP = 1, pageA = 1, pageS = 1, pageR = 1;
     const PAGE_SIZE = 10;
@@ -715,27 +722,22 @@
       return String(x ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]))
     }
 
-    // === FUNGSI NORMDATE & HEADER DIPERBAIKI SANGAT FLEKSIBEL ===
     function normDate(v) {
       v = String(v || '').trim();
       if (!v) return null;
 
-      // 1. Ambil bagian tanggalnya saja jika ada jam/waktu (dipisah spasi)
       let datePart = v.split(' ')[0].trim();
 
-      // 2. Format DD/MM/YYYY atau DD-MM-YYYY (Contoh: 01/08/2026 atau 1-8-2026)
       let m1 = datePart.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
       if (m1) {
         return `${m1[3]}-${m1[2].padStart(2, '0')}-${m1[1].padStart(2, '0')}`;
       }
 
-      // 3. Format YYYY-MM-DD atau YYYY/MM/DD (Contoh: 2026-08-01)
       let m2 = datePart.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
       if (m2) {
         return `${m2[1]}-${m2[2].padStart(2, '0')}-${m2[3].padStart(2, '0')}`;
       }
 
-      // 4. Fallback menggunakan Javascript Date Standard
       let d = new Date(v);
       if (!isNaN(d.getTime())) {
         let year = d.getFullYear();
@@ -841,11 +843,19 @@
       const banner = document.getElementById('criticalBanner');
       if (criticalData.length > 0) {
         document.getElementById('criticalCount').textContent = criticalData.length;
-        banner.classList.remove('hidden');
-        playAlertSound();
+        if (!isBannerClosedManually) {
+          banner.classList.remove('hidden');
+          playAlertSound();
+        }
       } else {
         banner.classList.add('hidden');
+        isBannerClosedManually = false;
       }
+    }
+
+    function closeCriticalBanner() {
+      document.getElementById('criticalBanner').classList.add('hidden');
+      isBannerClosedManually = true;
     }
 
     function filterCritical() {
@@ -1328,6 +1338,10 @@
       const refundRatio = ((countRefund / totalPending) * 100).toFixed(1);
       const kirimRatio = ((countKirimUlang / totalPending) * 100).toFixed(1);
 
+      document.getElementById('cp').textContent = P.length > 1 ? (P.length - 1) : 0;
+      document.getElementById('ca').textContent = A.length > 1 ? (A.length - 1) : 0;
+      document.getElementById('cs').textContent = S.length > 1 ? (S.length - 1) : 0;
+
       document.getElementById('cr').textContent = countRefund;
       document.getElementById('crRatio').textContent = refundRatio + '%';
       
@@ -1365,107 +1379,86 @@
           datasets: [{
             data: [countRefund, countKirimUlang, countLainnya],
             backgroundColor: ['#E11D2A', '#0055A5', '#64748B'],
-            borderRadius: 8, barThickness: 28
+            borderRadius: 6
           }]
         },
-        options: { 
-          responsive: true, 
-          maintainAspectRatio: false, 
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { ticks: { color: textColor } },
-            y: { ticks: { color: textColor } }
+            x: { ticks: { color: textColor, font: { size: 10 } } },
+            y: { ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true }
           }
         }
       });
 
-      const sortedDates = Object.keys(dateCounts).sort().slice(-7);
-      const trendData = sortedDates.map(d => dateCounts[d]);
+      const dates = Object.keys(dateCounts).sort();
+      const trendData = dates.map(d => dateCounts[d]);
 
       const ctxLine = document.getElementById('trendChart').getContext('2d');
       if (lineChartInstance) lineChartInstance.destroy();
       lineChartInstance = new Chart(ctxLine, {
         type: 'line',
         data: {
-          labels: sortedDates.length ? sortedDates : ['No Data'],
+          labels: dates.length ? dates : ['Tidak ada data'],
           datasets: [{
-            label: 'Total Pending',
+            label: 'Pendingan',
             data: trendData.length ? trendData : [0],
             borderColor: '#0055A5',
-            backgroundColor: isDark ? 'rgba(0, 85, 165, 0.3)' : 'rgba(0, 85, 165, 0.1)',
+            backgroundColor: 'rgba(0, 85, 165, 0.1)',
             fill: true,
-            tension: 0.3,
-            borderWidth: 3,
-            pointRadius: 4,
-            pointBackgroundColor: '#E11D2A'
+            tension: 0.3
           }]
         },
-        options: { 
-          responsive: true, 
-          maintainAspectRatio: false, 
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
           plugins: { legend: { display: false } },
-          scales: { 
-            x: { ticks: { color: textColor } },
-            y: { beginAtZero: true, ticks: { color: textColor } } 
+          scales: {
+            x: { ticks: { color: textColor, font: { size: 9 } } },
+            y: { ticks: { color: textColor, font: { size: 10 } }, beginAtZero: true }
           }
         }
       });
     }
 
-    function updateTimestamp() {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-      const el = document.getElementById('lastUpdate');
-      if (el) el.textContent = 'Update: ' + timeStr + ' WIB';
-    }
-
     async function loadAll() {
-      ['pmsg', 'amsg', 'smsg', 'rmsg'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Mengambil data...';
-      });
+      const now = new Date();
+      document.getElementById('lastUpdate').textContent = 'Update: ' + now.toLocaleTimeString('id-ID');
 
       try {
-        P = await get(URLS.p);
-        const totalP = Math.max(0, P.length - 1);
-        document.getElementById('cp').textContent = totalP;
+        const [pData, aData, sData, rData] = await Promise.all([
+          get(URLS.p).catch(() => []),
+          get(URLS.a).catch(() => []),
+          get(URLS.s).catch(() => []),
+          get(URLS.r).catch(() => [])
+        ]);
+
+        P = pData;
+        A = aData;
+        S = sData;
+        R = rData;
+
         fillPendingSelects();
         renderP(1);
+        renderA(1);
+        renderS(1);
+        renderR(1);
+        
+        checkCriticalAlerts();
         updateTopStores();
         updateChartsAndKPIs();
-        checkCriticalAlerts();
-      } catch (e) {
-        document.getElementById('pmsg').innerHTML = `<span class="text-red-600">❌ Gagal: ${esc(e.message)}</span>`;
-        document.getElementById('cp').textContent = '0';
-        document.getElementById('cr').textContent = '0';
-        document.getElementById('ck').textContent = '0';
+      } catch (err) {
+        console.error('Error loading data:', err);
       }
-
-      try {
-        A = await get(URLS.a);
-        document.getElementById('ca').textContent = Math.max(0, A.length - 1);
-        renderA(1);
-      } catch (e) { document.getElementById('ca').textContent = '0'; }
-
-      try {
-        S = await get(URLS.s);
-        document.getElementById('cs').textContent = Math.max(0, S.length - 1);
-        renderS(1);
-      } catch (e) { document.getElementById('cs').textContent = '0'; }
-
-      try {
-        R = await get(URLS.r);
-        renderR(1);
-      } catch (e) {
-        document.getElementById('rmsg').innerHTML = `<span class="text-red-600">❌ Gagal memuat data rekap: ${esc(e.message)}</span>`;
-      }
-
-      updateTimestamp();
     }
 
-    initPreferences();
-    changeAutoRefresh();
-    loadAll();
+    window.addEventListener('DOMContentLoaded', () => {
+      initPreferences();
+      loadAll();
+      changeAutoRefresh();
+    });
   </script>
 </body>
 </html>
