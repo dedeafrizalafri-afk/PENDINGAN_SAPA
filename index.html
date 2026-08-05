@@ -56,7 +56,7 @@
 <body class="bg-red-50/30 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
 
   <!-- Top Header / Navigation -->
-  <header class="bg-alfa-red dark:bg-slate-950 text-white sticky top-0 z-50 shadow-md border-b-2 border-red-700 dark:border-slate-800 w-full overflow-x-hidden">
+  <header class="bg-alfa-red dark:bg-slate-950 text-white sticky top-0 z-40 shadow-md border-b-2 border-red-700 dark:border-slate-800 w-full overflow-x-hidden">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5">
       
       <!-- Top Row: Logo, Title, Global Search & Action Buttons -->
@@ -143,20 +143,19 @@
       <!-- Bottom Row: Navigation Tabs -->
       <div class="pt-2 overflow-x-auto no-scrollbar">
         <nav class="flex space-x-1.5 min-w-max">
-          <button id="n0" onclick="show('dash')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5">
+          <button id="n0" onclick="switchTab('dash')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5">
             <i class="fa-solid fa-chart-pie"></i> Dashboard
           </button>
-          <button id="n1" onclick="show('pending')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
+          <button id="n1" onclick="switchTab('pending')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-box-open"></i> Data Pendingan
           </button>
-          <button id="n2" onclick="show('absensi')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
+          <button id="n2" onclick="switchTab('absensi')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-user-clock"></i> Absensi SAPA
           </button>
-          <button id="n3" onclick="show('serah')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
+          <button id="n3" onclick="switchTab('serah')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-clipboard-check"></i> Rekap Serah Terima
           </button>
-          <!-- NAV MENU REKAP PENGERJAAN -->
-          <button id="n4" onclick="show('rekap')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
+          <button id="n4" onclick="switchTab('rekap')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
             <i class="fa-solid fa-list-check"></i> Rekap Pengerjaan
           </button>
         </nav>
@@ -203,7 +202,7 @@
       <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
         
         <!-- Total Pending -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-red-100 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-red-100 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('pending')">
           <div class="absolute top-0 right-0 w-1.5 h-full bg-alfa-red"></div>
           <div class="flex justify-between items-start">
             <div>
@@ -254,7 +253,7 @@
         </div>
 
         <!-- Karyawan Active -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('absensi')">
           <div class="absolute top-0 right-0 w-1.5 h-full bg-slate-600"></div>
           <div class="flex justify-between items-start">
             <div>
@@ -269,7 +268,7 @@
         </div>
 
         <!-- Serah Terima -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('serah')">
           <div class="absolute top-0 right-0 w-1.5 h-full bg-emerald-500"></div>
           <div class="flex justify-between items-start">
             <div>
@@ -300,39 +299,46 @@
 
       </div>
 
-      <!-- GRAFIK TREN HARIAN & KATEGORI -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- GRAFIK TREN HARIAN, KATEGORI & SLA BREAKDOWN -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Bar Chart Kategori -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 border border-red-100 dark:border-slate-700 shadow-sm">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
-            <div>
-              <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                <i class="fa-solid fa-chart-column text-alfa-red"></i> Kategori Penanganan Order
-              </h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Perbandingan kategori tindak lanjut order</p>
-            </div>
+        <!-- SLA Breakdown Donut Chart (NEW) -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
+          <div class="mb-3">
+            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi SLA Ageing
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Porsi SLA berdasarkan usia pendingan</p>
           </div>
-          <div class="h-56 relative">
+          <div class="h-48 relative">
+            <canvas id="slaChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Bar Chart Kategori -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
+          <div class="mb-3">
+            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-column text-alfa-red"></i> Kategori Penanganan
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Perbandingan kategori tindak lanjut order</p>
+          </div>
+          <div class="h-48 relative">
             <canvas id="handlingChart"></canvas>
           </div>
-          <div id="chartSummary" class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 grid grid-cols-2 text-center gap-3"></div>
         </div>
 
         <!-- Line Chart Tren Harian -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 border border-red-100 dark:border-slate-700 shadow-sm">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
-            <div>
-              <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-alfa-blue dark:text-blue-400"></i> Tren Pendingan Harian
-              </h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Pergerakan volume order pending per tanggal</p>
-            </div>
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
+          <div class="mb-3">
+            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-alfa-blue dark:text-blue-400"></i> Tren Pendingan Harian
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Pergerakan volume order per tanggal</p>
           </div>
-          <div class="h-56 relative">
+          <div class="h-48 relative">
             <canvas id="trendChart"></canvas>
           </div>
-          <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-4 text-center font-medium">*Menampilkan tren hingga 7 tanggal terakhir</p>
         </div>
 
       </div>
@@ -343,7 +349,7 @@
           <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
             <i class="fa-solid fa-ranking-star text-alfa-red"></i> Top 5 Toko Pending Terbanyak
           </h3>
-          <button onclick="show('pending')" class="text-xs font-bold text-alfa-red dark:text-red-400 hover:underline transition flex items-center gap-1">
+          <button onclick="switchTab('pending')" class="text-xs font-bold text-alfa-red dark:text-red-400 hover:underline transition flex items-center gap-1">
             Lihat Semua <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
@@ -362,7 +368,7 @@
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Data Pendingan SAPA</h2>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Integrasi real-time Google Sheet SAPA Balaraja</p>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 flex-wrap">
           <button onclick="resetPendingFilters()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition">
             <i class="fa-solid fa-xmark"></i> Reset Filter
           </button>
@@ -372,8 +378,17 @@
         </div>
       </div>
 
+      <!-- Quick Preset Tanggal Buttons (NEW) -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <span class="text-xs font-bold text-slate-400 shrink-0">Preset:</span>
+        <button onclick="setFilterDatePreset('today')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Hari Ini</button>
+        <button onclick="setFilterDatePreset('yesterday')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Kemarin</button>
+        <button onclick="setFilterDatePreset('7days')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">7 Hari Terakhir</button>
+        <button onclick="setFilterDatePreset('thismonth')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Bulan Ini</button>
+      </div>
+
       <!-- Filter Box -->
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2.5">
         <div class="lg:col-span-2">
           <input id="pq" placeholder="🔎 Cari toko, order, PLU..." oninput="renderP(1)" 
             class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
@@ -385,6 +400,17 @@
         <div>
           <input id="pd2" type="date" onchange="renderP(1)" title="Sampai Tanggal"
             class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
+        </div>
+        <!-- SLA Filter Dropdown (NEW) -->
+        <div>
+          <select id="psla" onchange="renderP(1)" 
+            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
+            <option value="">Semua SLA</option>
+            <option value="aman">&lt;24h (Aman)</option>
+            <option value="warning">24-48h (Warning)</option>
+            <option value="kritis">48-60h (Kritis)</option>
+            <option value="over">&gt;60h (Over SLA)</option>
+          </select>
         </div>
         <div>
           <select id="ph" onchange="renderP(1)" 
@@ -506,8 +532,49 @@
 
   </main>
 
+  <!-- MODAL DETAIL ROW / UPDATE FORM (NEW) -->
+  <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-xl w-full p-6 border border-slate-200 dark:border-slate-700 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-700 pb-3">
+        <h3 id="modalTitle" class="text-base font-black text-slate-800 dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-alfa-red"></i> Detail Informasional Order
+        </h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg font-bold">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="modalBody" class="space-y-3 text-xs">
+        <!-- Content Dynamic -->
+      </div>
+
+      <!-- Optional Update Action Form (Google Webhook) -->
+      <div class="border-t border-slate-100 dark:border-slate-700 pt-3 space-y-2">
+        <h4 class="font-bold text-slate-700 dark:text-slate-200">Update Status Penanganan (Internal)</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <select id="modalStatusSelect" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs">
+            <option value="Proses">Proses</option>
+            <option value="Refund">Refund</option>
+            <option value="Kirim Ulang">Kirim Ulang</option>
+            <option value="Selesai">Selesai</option>
+          </select>
+          <input id="modalNoteInput" placeholder="Keterangan tambahan..." class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs">
+        </div>
+        <button onclick="submitOrderUpdate()" class="w-full bg-alfa-red hover:bg-alfa-redDark text-white py-2 rounded-xl font-bold text-xs transition">
+          Simpan Pembaruan
+        </button>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeModal()" class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-200 transition">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MOBILE FLOATING ACTION BUTTON (FAB) -->
-  <div id="mobileFab" class="md:hidden fixed bottom-5 right-5 z-50 flex flex-col gap-2">
+  <div id="mobileFab" class="md:hidden fixed bottom-5 right-5 z-30 flex flex-col gap-2">
     <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-11 h-11 bg-slate-800 text-white rounded-full shadow-lg flex items-center justify-center active:scale-95 transition" title="Scroll Ke Atas">
       <i class="fa-solid fa-arrow-up text-sm"></i>
     </button>
@@ -532,32 +599,40 @@
       p: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS169Srv3rdFs6JAfzotcL9qklXPh0AKi6jt-2ROYDlYSKtdDJy2KQ0znqTfHF_IVCtLJjyXXdbnLbm/pub?gid=463015523&single=true&output=csv',
       a: 'https://docs.google.com/spreadsheets/d/14V-_mluDi0m3MzCuODu1qWuAiMVdBj33RmOLNtd8xd4/gviz/tq?tqx=out:csv&gid=0',
       s: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3ernNEwvWFbHmFCxYTe-1PIU2zrmiSXpUfKygTyTifU0utlr78ynlXjFWP7xcVuxSWMpgUlWMg_ey/pub?gid=277045831&single=true&output=csv',
-      r: 'https://docs.google.com/spreadsheets/d/1liETKEZLstyowBTgYe5PNM0CalPSVjOR0b4-CXvDFd4/gviz/tq?tqx=out:csv&gid=694772450'
+      r: 'https://docs.google.com/spreadsheets/d/1liETKEZLstyowBTgYe5PNM0CalPSVjOR0b4-CXvDFd4/gviz/tq?tqx=out:csv&gid=694772450',
+      // Webhook Apps Script Opsional jika ingin update data langsung ke Spreadsheet
+      updateWebhook: '' 
     };
 
     let P = [], A = [], S = [], R = [];
     let criticalData = [];
-    let barChartInstance = null, lineChartInstance = null;
+    let barChartInstance = null, lineChartInstance = null, slaChartInstance = null;
     let pageP = 1, pageA = 1, pageS = 1, pageR = 1;
     const PAGE_SIZE = 10;
 
+    let currentModalData = null;
     let refreshTimer = null;
     let countdownTimer = null;
     let secondsLeft = 180;
 
-    // --- LOCALSTORAGE & DARK MODE ---
+    // --- LOCALSTORAGE & INITIAL PREFERENCES ---
     function initPreferences() {
-      // Load Dark Mode
       const isDark = localStorage.getItem('sapa_dark_mode') === 'true';
       if (isDark) {
         document.documentElement.classList.add('dark');
         document.getElementById('darkModeIcon').className = 'fa-solid fa-sun text-amber-300';
       }
 
-      // Load Timer Interval
       const savedTimer = localStorage.getItem('sapa_refresh_timer');
       if (savedTimer !== null) {
         document.getElementById('refreshInterval').value = savedTimer;
+      }
+
+      // Restore active tab parameter from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam && ['dash', 'pending', 'absensi', 'serah', 'rekap'].includes(tabParam)) {
+        show(tabParam);
       }
     }
 
@@ -569,6 +644,13 @@
       icon.className = isDark ? 'fa-solid fa-sun text-amber-300' : 'fa-solid fa-moon';
       
       if (P.length) updateChartsAndKPIs();
+    }
+
+    function switchTab(tabId) {
+      show(tabId);
+      const url = new URL(window.location);
+      url.searchParams.set('tab', tabId);
+      window.history.pushState({}, '', url);
     }
 
     // --- AUTO REFRESH DYNAMIC TIMER ---
@@ -662,7 +744,9 @@
         date: find('TGL ORDER', 'TANGGAL'),
         handling: find('PENANGANAN', 'KETERANGAN', 'STATUS'),
         pic: find('PIC'),
-        toko: find('TOKO', 'NAMA TOKO', 'KODE TOKO')
+        toko: find('TOKO', 'NAMA TOKO', 'KODE TOKO'),
+        orderId: find('ORDER', 'NO ORDER', 'ID'),
+        phone: find('HP', 'NO TELP', 'NO HP', 'TELEPON')
       };
     }
 
@@ -672,26 +756,53 @@
       return { date: find('TANGGAL', 'TGL', 'DATE', 'WAKTU') };
     }
 
-    // --- SLA / AGEING CALCULATOR ---
-    function getSLAStatusBadge(dateStr) {
-      if (!dateStr) return '<span class="text-slate-400">—</span>';
+    // --- SLA / AGEING CALCULATOR & BADGE ---
+    function getSLAInfo(dateStr) {
+      if (!dateStr) return { badge: '<span class="text-slate-400">—</span>', category: 'unknown', hours: 0 };
       const orderDate = new Date(dateStr);
-      if (isNaN(orderDate.getTime())) return '<span class="text-slate-400">—</span>';
+      if (isNaN(orderDate.getTime())) return { badge: '<span class="text-slate-400">—</span>', category: 'unknown', hours: 0 };
 
       const diffHours = (new Date() - orderDate) / (1000 * 60 * 60);
 
       if (diffHours < 24) {
-        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> &lt;24h (Aman)</span>`;
+        return {
+          badge: `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> &lt;24h (Aman)</span>`,
+          category: 'aman', hours: diffHours
+        };
       } else if (diffHours < 48) {
-        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 24-48h (Warning)</span>`;
+        return {
+          badge: `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 24-48h (Warning)</span>`,
+          category: 'warning', hours: diffHours
+        };
       } else if (diffHours < 60) {
-        return `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300 border border-orange-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-triangle-exclamation text-[8px] mr-1"></i> 48-60h (Kritis)</span>`;
+        return {
+          badge: `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300 border border-orange-200" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-triangle-exclamation text-[8px] mr-1"></i> 48-60h (Kritis)</span>`,
+          category: 'kritis', hours: diffHours
+        };
       } else {
-        return `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white dark:bg-red-700 animate-pulse" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-radiation text-[8px] mr-1"></i> &gt;60h (Over SLA)</span>`;
+        return {
+          badge: `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white dark:bg-red-700 animate-pulse" title="${Math.floor(diffHours)} Jam"><i class="fa-solid fa-radiation text-[8px] mr-1"></i> &gt;60h (Over SLA)</span>`,
+          category: 'over', hours: diffHours
+        };
       }
     }
 
-    // --- CHECK CRITICAL PENDING (> 60 JAM) ---
+    // --- CRITICAL ALERT & AUDIO NOTIFICATION ---
+    function playAlertSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      } catch(e) {}
+    }
+
     function checkCriticalAlerts() {
       const H = pendingHeader();
       const now = new Date();
@@ -717,24 +828,112 @@
       if (criticalData.length > 0) {
         document.getElementById('criticalCount').textContent = criticalData.length;
         banner.classList.remove('hidden');
+        playAlertSound();
       } else {
         banner.classList.add('hidden');
       }
     }
 
     function filterCritical() {
-      show('pending');
+      switchTab('pending');
       resetPendingFilters();
-      renderPaginatedTable(
-        document.getElementById('pt'), 
-        document.getElementById('pPage'), 
-        P[0] || [], 
-        criticalData, 
-        1, 
-        'renderP',
-        true
-      );
+      document.getElementById('psla').value = 'over';
+      renderP(1);
       document.getElementById('pmsg').innerHTML = `<span class="text-red-600 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> Menampilkan ${criticalData.length} Data Critical (>60 Jam) — HARUS DILAKUKAN REFUND & KONFIRMASI KE TOKO</span>`;
+    }
+
+    // --- QUICK DATE PRESETS ---
+    function setFilterDatePreset(preset) {
+      const d1 = document.getElementById('pd1');
+      const d2 = document.getElementById('pd2');
+      const now = new Date();
+      
+      const formatYMD = d => d.toISOString().slice(0, 10);
+
+      if (preset === 'today') {
+        d1.value = formatYMD(now);
+        d2.value = formatYMD(now);
+      } else if (preset === 'yesterday') {
+        const y = new Date(now); y.setDate(y.getDate() - 1);
+        d1.value = formatYMD(y);
+        d2.value = formatYMD(y);
+      } else if (preset === '7days') {
+        const d = new Date(now); d.setDate(d.getDate() - 7);
+        d1.value = formatYMD(d);
+        d2.value = formatYMD(now);
+      } else if (preset === 'thismonth') {
+        const first = new Date(now.getFullYear(), now.getMonth(), 1);
+        d1.value = formatYMD(first);
+        d2.value = formatYMD(now);
+      }
+      renderP(1);
+    }
+
+    // --- MODAL DETAIL ROW ---
+    function openDetailModal(rowIndex) {
+      const r = P[rowIndex];
+      if(!r) return;
+      currentModalData = r;
+
+      const headers = P[0] || [];
+      const H = pendingHeader();
+
+      let bodyHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">';
+      headers.forEach((h, i) => {
+        bodyHtml += `
+          <div class="bg-slate-50 dark:bg-slate-900 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700">
+            <span class="text-[10px] font-bold text-slate-400 block uppercase">${esc(h)}</span>
+            <span class="text-xs font-semibold text-slate-800 dark:text-slate-200 block mt-0.5 break-words">${esc(r[i] || '—')}</span>
+          </div>
+        `;
+      });
+      bodyHtml += '</div>';
+
+      // Tombol WhatsApp Toko
+      const phoneNum = H.phone >= 0 ? String(r[H.phone] || '').replace(/\D/g, '') : '';
+      if(phoneNum) {
+        const storeName = H.toko >= 0 ? r[H.toko] : 'Toko';
+        const orderId = H.orderId >= 0 ? r[H.orderId] : '—';
+        const waText = encodeURIComponent(`Halo ${storeName}, mohon konfirmasi terkait penanganan Order ID: ${orderId}. Terima kasih.`);
+        bodyHtml += `
+          <div class="mt-3">
+            <a href="https://wa.me/${phoneNum}?text=${waText}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3 rounded-xl flex items-center justify-center gap-2 transition">
+              <i class="fa-brands fa-whatsapp text-base"></i> Hubungi Toko via WhatsApp
+            </a>
+          </div>
+        `;
+      }
+
+      document.getElementById('modalBody').innerHTML = bodyHtml;
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    async function submitOrderUpdate() {
+      const status = document.getElementById('modalStatusSelect').value;
+      const note = document.getElementById('modalNoteInput').value;
+
+      if (!URLS.updateWebhook) {
+        alert(`Pembaruan disimulasikan!\nStatus: ${status}\nCatatan: ${note}\n(Untuk integrasi aktif, hubungkan Google Apps Script Webhook).`);
+        closeModal();
+        return;
+      }
+
+      try {
+        await fetch(URLS.updateWebhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rowData: currentModalData, status, note })
+        });
+        alert('Pembaruan berhasil dikirim ke spreadsheet!');
+        closeModal();
+        loadAll();
+      } catch(e) {
+        alert('Gagal memperbarui data: ' + e.message);
+      }
     }
 
     // Helper Paginasi & Renderer Tabel Lengkap
@@ -762,19 +961,24 @@
       headers.slice(0, 18).forEach(x => {
         html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider whitespace-nowrap">${esc(x)}</th>`;
       });
+      if (isPendingTable) {
+        html += `<th class="p-3 font-extrabold uppercase text-[10px] tracking-wider text-center">AKSI</th>`;
+      }
       html += '</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-600 dark:text-slate-300 font-medium">';
       
       if (paginatedData.length === 0) {
-        const colSpanTotal = headers.length + (isPendingTable ? 1 : 0);
+        const colSpanTotal = headers.length + (isPendingTable ? 2 : 0);
         html += `<tr><td colspan="${colSpanTotal}" class="p-8 text-center text-slate-400 font-medium italic">Data tidak ditemukan / Kosong</td></tr>`;
       } else {
         paginatedData.forEach((r, idx) => {
           const bg = idx % 2 === 0 ? 'bg-white dark:bg-slate-800' : 'bg-red-50/20 dark:bg-slate-800/50';
-          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition">`;
+          const originalIndex = P.indexOf(r);
+
+          html += `<tr class="${bg} hover:bg-red-50/60 dark:hover:bg-slate-700 transition cursor-pointer" onclick="${isPendingTable ? `openDetailModal(${originalIndex})` : ''}">`;
           
           if (isPendingTable) {
             const dateVal = H.date >= 0 ? normDate(r[H.date]) : null;
-            html += `<td class="p-3 whitespace-nowrap">${getSLAStatusBadge(dateVal)}</td>`;
+            html += `<td class="p-3 whitespace-nowrap">${getSLAInfo(dateVal).badge}</td>`;
           }
 
           r.slice(0, 18).forEach(x => {
@@ -793,6 +997,17 @@
 
             html += `<td class="p-3 whitespace-nowrap">${cellVal}</td>`;
           });
+
+          if (isPendingTable) {
+            html += `
+              <td class="p-3 whitespace-nowrap text-center" onclick="event.stopPropagation()">
+                <button onclick="openDetailModal(${originalIndex})" class="bg-slate-100 dark:bg-slate-700 hover:bg-alfa-red hover:text-white px-2 py-1 rounded-lg transition" title="Lihat Detail">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </td>
+            `;
+          }
+
           html += '</tr>';
         });
       }
@@ -834,6 +1049,7 @@
       pageP = page;
       const q = (document.getElementById('pq').value || '').toLowerCase();
       const d1 = document.getElementById('pd1').value, d2 = document.getElementById('pd2').value;
+      const slaFilter = document.getElementById('psla').value;
       const handling = document.getElementById('ph').value, pic = document.getElementById('pp').value;
       const H = pendingHeader();
       
@@ -841,8 +1057,14 @@
         if (q && !r.join(' ').toLowerCase().includes(q)) return false;
         if (handling && String(r[H.handling] || '') !== handling) return false;
         if (pic && String(r[H.pic] || '') !== pic) return false;
+        
+        const dt = normDate(r[H.date]);
+        if (slaFilter) {
+          const slaCategory = getSLAInfo(dt).category;
+          if (slaCategory !== slaFilter) return false;
+        }
+
         if (d1 || d2) {
-          const dt = normDate(r[H.date]);
           if (!dt) return false;
           if (d1 && dt < d1) return false;
           if (d2 && dt > d2) return false;
@@ -908,7 +1130,6 @@
       document.getElementById('smsg').innerHTML = `<i class="fa-solid fa-receipt text-alfa-red"></i> Menampilkan <b class="text-slate-800 dark:text-white mx-1">${d.length}</b> data serah terima`;
     }
 
-    // --- RENDER DATA REKAP (DARI URL SHEET BARU) ---
     function renderR(page = 1) {
       pageR = page;
       const q = (document.getElementById('rq').value || '').toLowerCase();
@@ -937,7 +1158,7 @@
       if(!q) return;
 
       const currentTab = ['dash', 'pending', 'absensi', 'serah', 'rekap'].find(id => !document.getElementById(id).hidden);
-      if (currentTab === 'dash') show('pending');
+      if (currentTab === 'dash') switchTab('pending');
 
       if (!document.getElementById('pending').hidden) {
         document.getElementById('pq').value = q;
@@ -958,6 +1179,7 @@
       document.getElementById('pq').value = '';
       document.getElementById('pd1').value = '';
       document.getElementById('pd2').value = '';
+      document.getElementById('psla').value = '';
       document.getElementById('ph').value = '';
       document.getElementById('pp').value = '';
       renderP(1);
@@ -979,22 +1201,10 @@
 
       const wb = XLSX.utils.book_new();
 
-      if (P.length) {
-        const wsP = XLSX.utils.aoa_to_sheet(P);
-        XLSX.utils.book_append_sheet(wb, wsP, "Data Pendingan");
-      }
-      if (R.length) {
-        const wsR = XLSX.utils.aoa_to_sheet(R);
-        XLSX.utils.book_append_sheet(wb, wsR, "Rekap Pengerjaan");
-      }
-      if (A.length) {
-        const wsA = XLSX.utils.aoa_to_sheet(A);
-        XLSX.utils.book_append_sheet(wb, wsA, "Absensi Karyawan");
-      }
-      if (S.length) {
-        const wsS = XLSX.utils.aoa_to_sheet(S);
-        XLSX.utils.book_append_sheet(wb, wsS, "Rekap Serah Terima");
-      }
+      if (P.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(P), "Data Pendingan");
+      if (R.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(R), "Rekap Pengerjaan");
+      if (A.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(A), "Absensi Karyawan");
+      if (S.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(S), "Rekap Serah Terima");
 
       XLSX.writeFile(wb, `Executive_Report_SAPA_Balaraja_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
@@ -1005,7 +1215,7 @@
         alert('Library PDF belum siap.');
         return;
       }
-      show('dash');
+      switchTab('dash');
       const element = document.getElementById('pdfPrintArea');
       const opt = {
         margin:       [0.3, 0.3, 0.3, 0.3],
@@ -1046,9 +1256,7 @@
       const storeCounts = {};
       P.slice(1).forEach(r => {
         const storeName = (r[H.toko] || '').trim();
-        if (storeName) {
-          storeCounts[storeName] = (storeCounts[storeName] || 0) + 1;
-        }
+        if (storeName) storeCounts[storeName] = (storeCounts[storeName] || 0) + 1;
       });
 
       document.getElementById('ct').textContent = Object.keys(storeCounts).length;
@@ -1072,7 +1280,7 @@
       ];
 
       container.innerHTML = sortedStores.map(([store, count], index) => `
-        <div class="flex flex-col justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 hover:bg-red-50/30 transition">
+        <div class="flex flex-col justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 hover:bg-red-50/30 transition cursor-pointer" onclick="switchTab('pending'); document.getElementById('pq').value='${esc(store)}'; renderP(1);">
           <span class="text-xs font-bold text-slate-700 dark:text-slate-200 truncate mb-2" title="${esc(store)}">${index + 1}. ${esc(store)}</span>
           <span class="text-[11px] font-extrabold px-2 py-1 rounded-md border text-center ${badgeColors[index] || badgeColors[4]}">
             ${count} Order
@@ -1084,6 +1292,7 @@
     function updateChartsAndKPIs() {
       const H = pendingHeader();
       let countRefund = 0, countKirimUlang = 0, countLainnya = 0;
+      let slaAman = 0, slaWarning = 0, slaKritis = 0, slaOver = 0;
       const dateCounts = {};
 
       P.slice(1).forEach(r => {
@@ -1098,7 +1307,14 @@
 
         if (H.date >= 0) {
           const dt = normDate(r[H.date]);
-          if (dt) dateCounts[dt] = (dateCounts[dt] || 0) + 1;
+          if (dt) {
+            dateCounts[dt] = (dateCounts[dt] || 0) + 1;
+            const slaCat = getSLAInfo(dt).category;
+            if(slaCat === 'aman') slaAman++;
+            else if(slaCat === 'warning') slaWarning++;
+            else if(slaCat === 'kritis') slaKritis++;
+            else if(slaCat === 'over') slaOver++;
+          }
         }
       });
 
@@ -1112,19 +1328,28 @@
       document.getElementById('ck').textContent = countKirimUlang;
       document.getElementById('ckRatio').textContent = kirimRatio + '%';
 
-      document.getElementById('chartSummary').innerHTML = `
-        <div class="bg-red-50 dark:bg-red-950/50 p-2 sm:p-2.5 rounded-xl border border-red-100 dark:border-red-900">
-          <p class="text-[10px] text-alfa-red dark:text-red-400 font-bold uppercase">Total Refund</p>
-          <p class="text-base sm:text-lg font-black text-alfa-redDark dark:text-red-300">${countRefund}</p>
-        </div>
-        <div class="bg-blue-50 dark:bg-blue-950/50 p-2 sm:p-2.5 rounded-xl border border-blue-100 dark:border-blue-900">
-          <p class="text-[10px] text-alfa-blue dark:text-blue-400 font-bold uppercase">Kirim Ulang</p>
-          <p class="text-base sm:text-lg font-black text-blue-900 dark:text-blue-300">${countKirimUlang}</p>
-        </div>
-      `;
-
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#94A3B8' : '#64748B';
+
+      // SLA Donut Chart
+      const ctxSLA = document.getElementById('slaChart').getContext('2d');
+      if (slaChartInstance) slaChartInstance.destroy();
+      slaChartInstance = new Chart(ctxSLA, {
+        type: 'doughnut',
+        data: {
+          labels: ['<24h Aman', '24-48h Warning', '48-60h Kritis', '>60h Over SLA'],
+          datasets: [{
+            data: [slaAman, slaWarning, slaKritis, slaOver],
+            backgroundColor: ['#10B981', '#F59E0B', '#F97316', '#E11D2A'],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { color: textColor, font: { size: 10 } } } }
+        }
+      });
 
       // Bar Chart
       const ctxBar = document.getElementById('handlingChart').getContext('2d');
@@ -1136,7 +1361,7 @@
           datasets: [{
             data: [countRefund, countKirimUlang, countLainnya],
             backgroundColor: ['#E11D2A', '#0055A5', '#64748B'],
-            borderRadius: 8, barThickness: 32
+            borderRadius: 8, barThickness: 28
           }]
         },
         options: { 
