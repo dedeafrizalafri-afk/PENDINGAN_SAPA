@@ -92,7 +92,7 @@
         <div class="w-full md:w-64">
           <div class="relative">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input id="globalSearch" oninput="handleGlobalSearch()" placeholder="Cari Global (Order/Toko/NIK)..." 
+            <input id="globalSearch" oninput="handleGlobalSearch()" placeholder="Cari Global (Order/Toko/PLU)..." 
               class="w-full bg-white/10 dark:bg-slate-800 text-white placeholder-red-200 dark:placeholder-slate-400 border border-white/30 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs focus:bg-white focus:text-slate-800 dark:focus:bg-slate-900 dark:focus:text-white focus:placeholder-slate-400 focus:outline-none transition shadow-inner">
           </div>
         </div>
@@ -164,7 +164,7 @@
     </div>
   </header>
 
-  <!-- CRITICAL ALERT BANNER (> 60 JAM) DENGAN FITUR CLOSE -->
+  <!-- CRITICAL ALERT BANNER (> 60 JAM) -->
   <div id="criticalBanner" class="hidden bg-red-600 text-white px-4 py-3 shadow-lg border-b-2 border-red-800 animate-pulse transition-all duration-300">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
       <div class="flex items-center gap-3">
@@ -183,7 +183,6 @@
         <button onclick="filterCritical()" class="bg-white text-red-700 hover:bg-red-100 px-3.5 py-1.5 rounded-xl text-xs font-black shadow transition whitespace-nowrap">
           Lihat Detail Data <i class="fa-solid fa-arrow-right ml-1"></i>
         </button>
-        <!-- Tombol Close Banner -->
         <button onclick="closeCriticalBanner()" class="bg-red-800 hover:bg-red-900 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shadow transition" title="Tutup Notifikasi">
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -362,6 +361,22 @@
         <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Toko dengan kebutuhan penanganan teratas</p>
         <div id="topStoresList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <p class="text-xs text-slate-400 italic">Memuat peringkat toko...</p>
+        </div>
+      </div>
+
+      <!-- TOP 10 ITEM / PLU TERBANYAK PENDING -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 border border-red-100 dark:border-slate-700 shadow-sm">
+        <div class="flex justify-between items-center mb-1">
+          <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-boxes-stacked text-alfa-red"></i> Top 10 Item/PLU Terbanyak Pending
+          </h3>
+          <span class="text-[10px] bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 font-extrabold px-2 py-0.5 rounded-full">
+            Pareto SKU
+          </span>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Analisis barang/PLU yang paling sering terkendala operasional</p>
+        <div id="topItemsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <p class="text-xs text-slate-400 italic">Memuat data item...</p>
         </div>
       </div>
 
@@ -764,7 +779,8 @@
         pic: find('PIC'),
         toko: find('TOKO', 'NAMA TOKO', 'KODE TOKO'),
         orderId: find('ORDER', 'NO ORDER', 'ID'),
-        phone: find('HP', 'NO TELP', 'NO HP', 'TELEPON')
+        phone: find('HP', 'NO TELP', 'NO HP', 'TELEPON'),
+        item: find('PLU', 'NAMA BARANG', 'ITEM', 'DESKRIPSI', 'SKU', 'BARANG')
       };
     }
 
@@ -1305,6 +1321,51 @@
       `).join('');
     }
 
+    function updateTopItems() {
+      const H = pendingHeader();
+      if (H.item < 0) {
+        document.getElementById('topItemsList').innerHTML = 
+          '<p class="text-xs text-slate-400 italic col-span-5">Kolom PLU / Nama Barang tidak ditemukan di Sheet</p>';
+        return;
+      }
+
+      const itemCounts = {};
+      P.slice(1).forEach(r => {
+        const itemName = (r[H.item] || '').trim();
+        if (itemName && itemName !== '-' && itemName !== '0') {
+          itemCounts[itemName] = (itemCounts[itemName] || 0) + 1;
+        }
+      });
+
+      const sortedItems = Object.entries(itemCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+      const container = document.getElementById('topItemsList');
+      if (!sortedItems.length) {
+        container.innerHTML = '<p class="text-xs text-slate-400 italic col-span-5">Tidak ada data item</p>';
+        return;
+      }
+
+      container.innerHTML = sortedItems.map(([item, count], index) => `
+        <div class="flex flex-col justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-700 hover:bg-red-50/30 transition cursor-pointer group" 
+             onclick="switchTab('pending'); document.getElementById('pq').value='${esc(item)}'; renderP(1);" 
+             title="Klik untuk memfilter item ini">
+          <div class="flex items-start justify-between gap-1 mb-2">
+            <span class="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-alfa-red transition line-clamp-2" title="${esc(item)}">
+              ${index + 1}. ${esc(item)}
+            </span>
+          </div>
+          <div class="flex justify-between items-center mt-1">
+            <span class="text-[10px] text-slate-400 font-semibold">Frekuensi</span>
+            <span class="text-xs font-black text-alfa-red bg-red-100 dark:bg-red-950/60 dark:text-red-300 px-2 py-0.5 rounded-md border border-red-200 dark:border-red-800">
+              ${count}x
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function updateChartsAndKPIs() {
       const H = pendingHeader();
       let countRefund = 0, countKirimUlang = 0, countLainnya = 0;
@@ -1448,6 +1509,7 @@
         
         checkCriticalAlerts();
         updateTopStores();
+        updateTopItems();
         updateChartsAndKPIs();
       } catch (err) {
         console.error('Error loading data:', err);
